@@ -4,7 +4,18 @@
 
 Database:
 
-    - The 'posts' table will be comprised of the following columns:
+    - The 'authors' table is used for authentication, and is comprised of the following columns:
+
+            + id
+            + username
+                > Indexed for fast user lookup
+            + password
+            + email
+                > Indexed for password reset
+            + token
+                > Indexed for password reset
+    
+    - The 'posts' table stores all posts, and is comprised of the following columns:
     
         + id
         + media
@@ -24,12 +35,6 @@ Database:
             > Indexed so you can see all posts with a tag
         + body
             > The content of the post, with full support for HTML
-    
-    - The 'authors' table will be comprised of the following columns:
-    
-        + id
-        + username
-        + password
     
     - 
 

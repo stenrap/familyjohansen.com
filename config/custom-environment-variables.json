@@ -1,0 +1,8 @@
+{
+    "db": {
+        "config": {
+            "user": "FAMILY_JOHANSEN_DB_USER",
+            "password": "FAMILY_JOHANSEN_DB_PASSWORD"
+        }
+    }
+}
