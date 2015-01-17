@@ -26,9 +26,24 @@ CREATE TABLE `family_johansen`.`authors` (
   KEY `token_INDEX` (`token`)
 );
 
+CREATE TABLE `family_johansen`.`posts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `featured` varchar(255) DEFAULT NULL,
+  `video` tinyint(4) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `post_date` date NOT NULL,
+  `author` int(10) unsigned NOT NULL,
+  `tags` varchar(255) DEFAULT NULL,
+  `body` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `author_fk_idx` (`author`) USING BTREE,
+  KEY `title_idx` (`title`),
+  KEY `tag_idx` (`tags`),
+  CONSTRAINT `author_fk` FOREIGN KEY (`author`) REFERENCES `authors` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+);
 
 
-/* WYLO .... Create the posts table. Don't forget that you'll want a single db-service (not separate login- and post- services. */
+/* WYLO .... You'll want a single db-service (not separate login- and post- services). */
 
 
 DROP PROCEDURE IF EXISTS family_johansen.getUser;

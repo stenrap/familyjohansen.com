@@ -6,20 +6,20 @@ Database:
 
     - The 'authors' table is used for authentication, and is comprised of the following columns:
 
-            + id
-            + username
-                > Indexed for fast user lookup
-            + password
-            + email
-                > Indexed for password reset
-            + token
-                > Indexed for password reset
+        + id
+        + username
+            > Indexed for fast user lookup
+        + password
+        + email
+            > Indexed for password reset
+        + token
+            > Indexed for password reset
     
     - The 'posts' table stores all posts, and is comprised of the following columns:
     
         + id
-        + media
-            > A path to an image or video, uploaded locally or hosted elsewhere (YouTube, Vimeo)
+        + featured
+            > A path to a featured image/video that appears at the top of the post, uploaded locally or hosted elsewhere (YouTube, Vimeo)
         + video
             > A boolean indicating whether the media is a video
         + title
