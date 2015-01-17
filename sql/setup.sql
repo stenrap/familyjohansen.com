@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `family_johansen`.`posts`;
 
 CREATE TABLE `family_johansen`.`authors` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
+  `username` varbinary(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
   `token` varchar(36) DEFAULT NULL,
@@ -30,17 +30,16 @@ CREATE TABLE `family_johansen`.`authors` (
 /* create the posts table... */
 
 
-DROP PROCEDURE IF EXISTS family_johansen.verifyUser;
+DROP PROCEDURE IF EXISTS family_johansen.getUser;
 DELIMITER //
-CREATE PROCEDURE family_johansen.verifyUser(userNm VARCHAR(50), passWd VARCHAR(255))
+CREATE PROCEDURE family_johansen.getUser(userNm VARBINARY(50))
 	BEGIN
 		SET @username = userNm;
-		SET @password = passWd;
-		SET @userSelectVar = CONCAT('SELECT COUNT(*) AS num ',
-		                             'FROM family_johansen.authors ',
-		                             'WHERE username = ? AND password = ?');
+		SET @userSelectVar = CONCAT('SELECT * ',
+		                            'FROM family_johansen.authors ',
+		                            'WHERE username = ?');
 		PREPARE userSelectStmt FROM @userSelectVar;
-		EXECUTE userSelectStmt USING @username, @password;
+		EXECUTE userSelectStmt USING @username;
 		DEALLOCATE PREPARE userSelectStmt;
 	END
 	//

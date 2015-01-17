@@ -16,10 +16,10 @@ module.exports = {
     return this;
   },
   
-  verifyUser: function(username, password, callback) {
+  verifyUser: function(username, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
-      connection.query('CALL verifyUser(?,?)', [username, password], function(err, results) {
+      connection.query('CALL getUser(?)', [username], function(err, results) {
         if (err) throw err;
         connection.release();
         // TODO:
