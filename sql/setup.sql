@@ -28,7 +28,7 @@ CREATE TABLE `family_johansen`.`authors` (
 
 
 
-/* create the posts table... */
+/* WYLO .... Create the posts table. Don't forget that you'll want a single db-service (not separate login- and post- services. */
 
 
 DROP PROCEDURE IF EXISTS family_johansen.getUser;
