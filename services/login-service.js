@@ -1,5 +1,6 @@
 var mysql = require('mysql2');
 var pool = null;
+var bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -7,7 +8,7 @@ module.exports = {
     pool = mysql.createPool({
       connectionLimit: dbConfig.get('connectionLimit'),
       database: 'family_johansen',
-      debug: true,
+//      debug: true,
       host: dbConfig.get('host'),
       password: dbConfig.get('password'),
       port: dbConfig.get('port'),
@@ -16,13 +17,26 @@ module.exports = {
     return this;
   },
   
-  verifyUser: function(username, callback) {
+  verifyUser: function(username, password, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
       connection.query('CALL getUser(?)', [username], function(err, results) {
         if (err) throw err;
         connection.release();
-        // TODO:
+        if (results[0][0]) {
+          var user = results[0][0];
+          bcrypt.compare(password, user.password, function(err, result) {
+            if (err) throw err;
+            if (result) {
+              delete user.password;
+              callback(user);
+            } else {
+              callback();
+            }
+          });
+        } else {
+          callback();
+        }
       });
     });
   },

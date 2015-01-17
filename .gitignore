@@ -35,3 +35,6 @@ node_modules
 
 # OS X
 .DS_Store
+
+# Files that just shouldn't be committed
+login-service-test.js

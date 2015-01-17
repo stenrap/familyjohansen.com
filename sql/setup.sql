@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `family_johansen`.`posts`;
 
 CREATE TABLE `family_johansen`.`authors` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varbinary(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
   `token` varchar(36) DEFAULT NULL,
@@ -27,12 +27,13 @@ CREATE TABLE `family_johansen`.`authors` (
 );
 
 
+
 /* create the posts table... */
 
 
 DROP PROCEDURE IF EXISTS family_johansen.getUser;
 DELIMITER //
-CREATE PROCEDURE family_johansen.getUser(userNm VARBINARY(50))
+CREATE PROCEDURE family_johansen.getUser(userNm VARCHAR(50))
 	BEGIN
 		SET @username = userNm;
 		SET @userSelectVar = CONCAT('SELECT * ',
