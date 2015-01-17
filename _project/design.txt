@@ -15,6 +15,7 @@ Database:
         + token
             > Indexed for password reset
     
+    
     - The 'posts' table stores all posts, and is comprised of the following columns:
     
         + id
@@ -23,6 +24,8 @@ Database:
         + video
             > A boolean indicating whether the media is a video
         + title
+            > The actual title of the post
+        + normalized_title
             > Indexed and used as the post's friendly URL
         + date
             > The date the post was published
@@ -36,7 +39,25 @@ Database:
         + body
             > The content of the post, with full support for HTML
     
-    - 
+    
+    - Stored procedures used by the db-service:
+    
+        + [DONE] getUser() - look up a user for authentication
+        
+        + createPost() - create a new post
+        
+        + getSinglePost() - read a single post by title
+        
+        + getLatestPosts() - read the 10 most recent posts for the home page
+        
+        + getPostsByAuthor() - read the 10 most recent posts by an author
+        
+        + getPostsByTag() - read the 10 most recent posts by tag
+        
+        + updatePost() - update a single post by id
+        
+        + deletePost() - delete a single post by id
+
 
 Routes:
 

@@ -41,6 +41,15 @@ module.exports = {
     });
   },
 
+  normalizeTitle: function(title) {
+    var normalized = title.toLowerCase();
+    normalized = normalized.trim();
+    normalized = normalized.replace(/\s/, "-");
+    // If it's not a letter, number, or dash, replace it with the empty string
+    normalized = normalized.replace(/[^a-z0-9\-]/, "");
+    return normalized;
+  },
+
   shutDown: function() {
     pool.end();
   }

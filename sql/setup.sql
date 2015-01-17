@@ -31,14 +31,16 @@ CREATE TABLE `family_johansen`.`posts` (
   `featured` varchar(255) DEFAULT NULL,
   `video` tinyint(4) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
+  `normalized_title` varchar(255) NOT NULL,
   `post_date` date NOT NULL,
   `author` int(10) unsigned NOT NULL,
   `tags` varchar(255) DEFAULT NULL,
   `body` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `author_fk_idx` (`author`) USING BTREE,
-  KEY `title_idx` (`title`),
+  KEY `title_idx` (`normalized_title`),
   KEY `tag_idx` (`tags`),
+  KEY `date_idx` (`post_date`),
   CONSTRAINT `author_fk` FOREIGN KEY (`author`) REFERENCES `authors` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
