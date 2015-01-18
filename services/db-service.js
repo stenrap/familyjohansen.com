@@ -50,10 +50,11 @@ module.exports = {
     return normalized;
   },
 
-  createPost: function(featured, video, title, normed, postDate, author, tags, body, callback) {
+  createPost: function(post, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
-      connection.query('CALL createPost(?,?,?,?,?,?,?,?)', [featured, video, title, normed, postDate, author, tags, body], function(err, results) {
+      var params = [post.featured, post.video, post.title, post.normed, post.postDate, post.author, post.tags, post.body];
+      connection.query('CALL createPost(?,?,?,?,?,?,?,?)', params, function(err, results) {
         if (err) throw err;
         connection.release();
         callback(results[0][0].id);

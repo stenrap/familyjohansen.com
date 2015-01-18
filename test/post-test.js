@@ -15,22 +15,30 @@ describe('The db service', function() {
   });
   
   it('should support creating posts', function(done) {
-    dbService.createPost('/images/family.jpg',
-                         false,
-                         'Our Story',
-                         'our-story',
-                         '2015-01-22',
-                         1,
-                         'infertility, miracle, in vitro',
-                         '',
-                         function(id) {
-                           postId = id;
-                           expect(postId).to.be.above(0);
-                           done();
-                         });
+    var post = {
+      featured: '/images/family.jpg',
+      video: false,
+      title: 'Our Story',
+      normed: 'our-story',
+      postDate: '2015-01-22',
+      author: 1,
+      tags: 'infertility, miracle, in vitro',
+      body: 'Connor is our <em>precious</em> miracle.'
+    };
+    dbService.createPost(post, function(id) {
+      postId = id;
+      expect(postId).to.be.above(0);
+      done();
+    });
   });
   
-  // WYLO .... Now that you have a post, add a test for getSinglePost()
+  /*
+  it('should supporting finding a post by title', function(done) {
+    dbService.getSinglePost('our-story', function(post) {
+      
+    });
+  });
+  */
   
   // WYLO .... Since you have the post id, add a test for updatePost()
 
