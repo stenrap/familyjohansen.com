@@ -32,13 +32,14 @@ describe('The db service', function() {
     });
   });
   
-  /*
+  // WYLO .... Get this test working.
+  
   it('should supporting finding a post by title', function(done) {
     dbService.getSinglePost('our-story', function(post) {
-      
+      // expect some things about the post
+      done();
     });
   });
-  */
   
   // WYLO .... Since you have the post id, add a test for updatePost()
 

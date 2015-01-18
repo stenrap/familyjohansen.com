@@ -62,6 +62,18 @@ module.exports = {
     });
   },
 
+  getSinglePost: function(title, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL getSinglePost(?)', [title], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        // WYLO .... Figure out how to handle success and fail results.
+        callback(results[0][0]);
+      });
+    });
+  },
+
   shutDown: function() {
     pool.end();
   }
