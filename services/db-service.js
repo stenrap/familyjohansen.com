@@ -50,6 +50,17 @@ module.exports = {
     return normalized;
   },
 
+  createPost: function(featured, video, title, normed, postDate, author, tags, body, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL createPost(?,?,?,?,?,?,?,?)', [featured, video, title, normed, postDate, author, tags, body], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback(results[0][0].id);
+      });
+    });
+  },
+
   shutDown: function() {
     pool.end();
   }

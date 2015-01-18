@@ -44,7 +44,7 @@ Database:
     
         + [DONE] getUser() - look up a user for authentication
         
-        + createPost() - create a new post
+        + [DONE] createPost() - create a new post
         
         + getSinglePost() - read a single post by title
         
