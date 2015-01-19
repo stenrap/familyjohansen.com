@@ -53,7 +53,12 @@ describe('The db service', function() {
       done();
     });
   });
-  
-  // WYLO .... Add a test for getPostsByTag()
+
+  it('should support getting posts by a tag', function(done) {
+    dbService.getPostsByTag('miracle', 0, function(posts) {
+      expect(posts.length).to.be.above(0);
+      done();
+    });
+  });
 
 });

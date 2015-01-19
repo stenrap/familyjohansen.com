@@ -95,6 +95,17 @@ module.exports = {
     });
   },
 
+  getPostsByTag: function(tag, offset, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL getPostsByTag(?,?)', [tag, offset], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback(results[0]);
+      });
+    });
+  },
+
   shutDown: function() {
     pool.end();
   }

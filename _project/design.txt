@@ -52,8 +52,8 @@ Database:
         
         + [DONE] getPostsByAuthor() - read 10 recent posts by an author (based on an offset)
         
-        + getPostsByTag() - read 10 recent posts by tag (based on an offset)
-        
+        + [DONE] getPostsByTag() - read 10 recent posts by tag (based on an offset)
+
         + updatePost() - update a single post by id
         
         + deletePost() - delete a single post by id
