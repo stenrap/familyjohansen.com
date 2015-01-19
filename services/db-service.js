@@ -51,8 +51,10 @@ module.exports = {
   },
 
   createPost: function(post, callback) {
+    var service = this;
     pool.getConnection(function(err, connection) {
       if (err) throw err;
+      post.normed = service.normalizeTitle(post.title);
       var params = [post.featured, post.video, post.title, post.normed, post.postDate, post.author, post.tags, post.body];
       connection.query('CALL createPost(?,?,?,?,?,?,?,?)', params, function(err, results) {
         if (err) throw err;
@@ -102,6 +104,20 @@ module.exports = {
         if (err) throw err;
         connection.release();
         callback(results[0]);
+      });
+    });
+  },
+  
+  updatePost: function(post, callback) {
+    var service = this;
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      post.normed = service.normalizeTitle(post.title);
+      var params = [post.id, post.featured, post.video, post.title, post.normed, post.postDate, post.author, post.tags, post.body];
+      connection.query('CALL updatePost(?,?,?,?,?,?,?,?,?)', params, function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback(results[0][0].id);
       });
     });
   },

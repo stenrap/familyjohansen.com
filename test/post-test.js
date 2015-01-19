@@ -19,7 +19,6 @@ describe('The db service', function() {
       featured: '/images/family.jpg',
       video: false,
       title: 'Our Story',
-      normed: 'our-story',
       postDate: '2015-01-22',
       author: 1,
       tags: 'infertility, miracle, in vitro',
@@ -58,6 +57,26 @@ describe('The db service', function() {
     dbService.getPostsByTag('miracle', 0, function(posts) {
       expect(posts.length).to.be.above(0);
       done();
+    });
+  });
+
+  it('should support updating posts', function(done) {
+    var post = {
+      id: postId,
+      featured: '/images/family.jpg',
+      video: false,
+      title: 'Our Story',
+      postDate: '2015-01-22',
+      author: 1,
+      tags: 'infertility, miracle, in vitro',
+      body: 'We love Connor; he is our <em>precious</em> miracle.'
+    };
+    dbService.updatePost(post, function(id) {
+      expect(postId).to.equal(id);
+      dbService.getSinglePost('our-story', function(post) {
+        expect(post.body).to.equal('We love Connor; he is our <em>precious</em> miracle.');
+        done();
+      });
     });
   });
 
