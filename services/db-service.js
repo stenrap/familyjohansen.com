@@ -73,6 +73,17 @@ module.exports = {
     });
   },
 
+  getLatestPosts: function(offset, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL getLatestPosts(?)', [offset], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback(results[0]);
+      });
+    });
+  },
+
   shutDown: function() {
     pool.end();
   }

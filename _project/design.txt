@@ -48,7 +48,7 @@ Database:
         
         + [DONE] getSinglePost() - read a single post by title
         
-        + getLatestPosts() - read the 10 most recent posts for the home page
+        + [DONE] getLatestPosts() - read the 10 most recent posts for the home page
         
         + getPostsByAuthor() - read the 10 most recent posts by an author
         

@@ -39,7 +39,12 @@ describe('The db service', function() {
       done();
     });
   });
-  
-  // WYLO .... Since you have the post id, add a test for updatePost()
+
+  it('should supporting getting the latest posts', function(done) {
+    dbService.getLatestPosts(0, function(posts) {
+      expect(posts.length).to.be.above(0);
+      done();
+    });
+  });
 
 });

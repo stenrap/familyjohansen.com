@@ -3,7 +3,7 @@
     
     MySQL should be starting automatically on your Mac. If it isn't, try typing: mysql.server start
     
-    To insert a new author, create a bcryp-hashed password using 'password-hasher.js', then plug it into 'createUser.sql'
+    To insert a new author, create a bcrypt-hashed password using 'password-hasher.js', then plug it into 'createUser.sql'
  */
 
 CREATE DATABASE IF NOT EXISTS family_johansen CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
@@ -104,6 +104,24 @@ CREATE PROCEDURE family_johansen.getSinglePost(title VARCHAR(255))
 		                            'WHERE normalized_title = ?');
 		PREPARE postSelectStmt FROM @postSelectVar;
 		EXECUTE postSelectStmt USING @title;
+		DEALLOCATE PREPARE postSelectStmt;
+	END
+	//
+DELIMITER ;
+
+/* getLatestPosts() */
+
+DROP PROCEDURE IF EXISTS family_johansen.getLatestPosts;
+DELIMITER //
+CREATE PROCEDURE family_johansen.getLatestPosts(offset INT) /* zero-based offset */
+	BEGIN
+		SET @offset = offset * 10;
+		SET @postSelectVar = CONCAT('SELECT * ',
+		                            'FROM family_johansen.posts ',
+		                            'ORDER BY post_date DESC ',
+		                            'LIMIT ?, 10');
+		PREPARE postSelectStmt FROM @postSelectVar;
+		EXECUTE postSelectStmt USING @offset;
 		DEALLOCATE PREPARE postSelectStmt;
 	END
 	//
