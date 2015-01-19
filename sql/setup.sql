@@ -3,9 +3,7 @@
     
     MySQL should be starting automatically on your Mac. If it isn't, try typing: mysql.server start
     
-    To insert a new author:
-    
-      
+    To insert a new author, create a bcryp-hashed password using 'password-hasher.js', then plug it into 'createUser.sql'
  */
 
 CREATE DATABASE IF NOT EXISTS family_johansen CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
@@ -46,6 +44,8 @@ CREATE TABLE `family_johansen`.`posts` (
 
 /* Stored Procedures */
 
+/* getUser() */
+
 DROP PROCEDURE IF EXISTS family_johansen.getUser;
 DELIMITER //
 CREATE PROCEDURE family_johansen.getUser(userNm VARCHAR(50))
@@ -60,6 +60,8 @@ CREATE PROCEDURE family_johansen.getUser(userNm VARCHAR(50))
 	END
 	//
 DELIMITER ;
+
+/* createPost() */
 
 DROP PROCEDURE IF EXISTS family_johansen.createPost;
 DELIMITER //
@@ -86,6 +88,23 @@ CREATE PROCEDURE family_johansen.createPost(featured VARCHAR(255),
 		EXECUTE postInsertStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body;
 		SELECT LAST_INSERT_ID() AS id;
 		DEALLOCATE PREPARE postInsertStmt;
+	END
+	//
+DELIMITER ;
+
+/* getSinglePost() */
+
+DROP PROCEDURE IF EXISTS family_johansen.getSinglePost;
+DELIMITER //
+CREATE PROCEDURE family_johansen.getSinglePost(title VARCHAR(255))
+	BEGIN
+		SET @title = title;
+		SET @postSelectVar = CONCAT('SELECT * ',
+		                            'FROM family_johansen.posts ',
+		                            'WHERE normalized_title = ?');
+		PREPARE postSelectStmt FROM @postSelectVar;
+		EXECUTE postSelectStmt USING @title;
+		DEALLOCATE PREPARE postSelectStmt;
 	END
 	//
 DELIMITER ;

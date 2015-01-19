@@ -46,7 +46,7 @@ Database:
         
         + [DONE] createPost() - create a new post
         
-        + getSinglePost() - read a single post by title
+        + [DONE] getSinglePost() - read a single post by title
         
         + getLatestPosts() - read the 10 most recent posts for the home page
         

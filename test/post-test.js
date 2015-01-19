@@ -32,11 +32,10 @@ describe('The db service', function() {
     });
   });
   
-  // WYLO .... Get this test working.
-  
   it('should supporting finding a post by title', function(done) {
     dbService.getSinglePost('our-story', function(post) {
-      // expect some things about the post
+      expect(post.title).to.equal('Our Story');
+      expect(post.post_date.getFullYear()).to.equal(2015);
       done();
     });
   });
