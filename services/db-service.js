@@ -73,10 +73,21 @@ module.exports = {
     });
   },
 
-  getLatestPosts: function(offset, callback) {
+  getPostsByDate: function(offset, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
-      connection.query('CALL getLatestPosts(?)', [offset], function(err, results) {
+      connection.query('CALL getPostsByDate(?)', [offset], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback(results[0]);
+      });
+    });
+  },
+
+  getPostsByAuthor: function(authorId, offset, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL getPostsByAuthor(?,?)', [authorId, offset], function(err, results) {
         if (err) throw err;
         connection.release();
         callback(results[0]);

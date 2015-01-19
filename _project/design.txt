@@ -48,11 +48,11 @@ Database:
         
         + [DONE] getSinglePost() - read a single post by title
         
-        + [DONE] getLatestPosts() - read the 10 most recent posts for the home page
+        + [DONE] getPostsByDate() - read 10 recent posts for the home page (based on an offset)
         
-        + getPostsByAuthor() - read the 10 most recent posts by an author
+        + [DONE] getPostsByAuthor() - read 10 recent posts by an author (based on an offset)
         
-        + getPostsByTag() - read the 10 most recent posts by tag
+        + getPostsByTag() - read 10 recent posts by tag (based on an offset)
         
         + updatePost() - update a single post by id
         

@@ -1,6 +1,6 @@
-DROP PROCEDURE IF EXISTS family_johansen.getLatestPosts;
+DROP PROCEDURE IF EXISTS family_johansen.getPostsByDate;
 DELIMITER //
-CREATE PROCEDURE family_johansen.getLatestPosts(offset INT) /* zero-based offset */
+CREATE PROCEDURE family_johansen.getPostsByDate(offset INT) /* zero-based offset */
 	BEGIN
 		SET @offset = offset * 10;
 		SET @postSelectVar = CONCAT('SELECT * ',

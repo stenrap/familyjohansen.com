@@ -32,7 +32,7 @@ describe('The db service', function() {
     });
   });
   
-  it('should supporting finding a post by title', function(done) {
+  it('should support finding a post by title', function(done) {
     dbService.getSinglePost('our-story', function(post) {
       expect(post.title).to.equal('Our Story');
       expect(post.post_date.getFullYear()).to.equal(2015);
@@ -40,11 +40,20 @@ describe('The db service', function() {
     });
   });
 
-  it('should supporting getting the latest posts', function(done) {
-    dbService.getLatestPosts(0, function(posts) {
+  it('should support getting posts by date', function(done) {
+    dbService.getPostsByDate(0, function(posts) {
       expect(posts.length).to.be.above(0);
       done();
     });
   });
+
+  it('should support getting posts by an author', function(done) {
+    dbService.getPostsByAuthor(1, 0, function(posts) {
+      expect(posts.length).to.be.above(0);
+      done();
+    });
+  });
+  
+  // WYLO .... Add a test for getPostsByTag()
 
 });

@@ -8,10 +8,12 @@
 
 CREATE DATABASE IF NOT EXISTS family_johansen CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
 
-DROP TABLE IF EXISTS `family_johansen`.`authors`;
-DROP TABLE IF EXISTS `family_johansen`.`posts`;
+USE family_johansen;
 
-CREATE TABLE `family_johansen`.`authors` (
+DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `authors`;
+
+CREATE TABLE `authors` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -24,7 +26,7 @@ CREATE TABLE `family_johansen`.`authors` (
   KEY `token_INDEX` (`token`)
 );
 
-CREATE TABLE `family_johansen`.`posts` (
+CREATE TABLE `posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `featured` varchar(255) DEFAULT NULL,
   `video` tinyint(4) DEFAULT NULL,
@@ -109,11 +111,11 @@ CREATE PROCEDURE family_johansen.getSinglePost(title VARCHAR(255))
 	//
 DELIMITER ;
 
-/* getLatestPosts() */
+/* getPostsByDate() */
 
-DROP PROCEDURE IF EXISTS family_johansen.getLatestPosts;
+DROP PROCEDURE IF EXISTS family_johansen.getPostsByDate;
 DELIMITER //
-CREATE PROCEDURE family_johansen.getLatestPosts(offset INT) /* zero-based offset */
+CREATE PROCEDURE family_johansen.getPostsByDate(offset INT) /* zero-based offset */
 	BEGIN
 		SET @offset = offset * 10;
 		SET @postSelectVar = CONCAT('SELECT * ',
@@ -122,6 +124,26 @@ CREATE PROCEDURE family_johansen.getLatestPosts(offset INT) /* zero-based offset
 		                            'LIMIT ?, 10');
 		PREPARE postSelectStmt FROM @postSelectVar;
 		EXECUTE postSelectStmt USING @offset;
+		DEALLOCATE PREPARE postSelectStmt;
+	END
+	//
+DELIMITER ;
+
+/* getPostsByAuthor() */
+
+DROP PROCEDURE IF EXISTS family_johansen.getPostsByAuthor;
+DELIMITER //
+CREATE PROCEDURE family_johansen.getPostsByAuthor(authorId INT, offset INT) /* zero-based offset */
+	BEGIN
+		SET @authorId = authorId;
+		SET @offset = offset * 10;
+		SET @postSelectVar = CONCAT('SELECT * ',
+		                            'FROM family_johansen.posts ',
+		                            'WHERE author = ? ',
+		                            'ORDER BY post_date DESC ',
+		                            'LIMIT ?, 10');
+		PREPARE postSelectStmt FROM @postSelectVar;
+		EXECUTE postSelectStmt USING @authorId, @offset;
 		DEALLOCATE PREPARE postSelectStmt;
 	END
 	//
