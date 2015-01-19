@@ -79,5 +79,7 @@ describe('The db service', function() {
       });
     });
   });
+  
+  // WYLO .... Add a test for deletePost()
 
 });

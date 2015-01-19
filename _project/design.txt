@@ -54,7 +54,7 @@ Database:
         
         + [DONE] getPostsByTag() - read 10 recent posts by tag (based on an offset)
 
-        + updatePost() - update a single post by id
+        + [DONE] updatePost() - update a single post by id
         
         + deletePost() - delete a single post by id
 
