@@ -79,7 +79,14 @@ describe('The db service', function() {
       });
     });
   });
-  
-  // WYLO .... Add a test for deletePost()
+
+  it('should support deleting a post by id', function(done) {
+    dbService.deletePost(postId, function(posts) {
+      dbService.getSinglePost('our-story', function(post) {
+        expect(post).to.be.undefined;
+        done();
+      });
+    });
+  });
 
 });

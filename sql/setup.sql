@@ -148,3 +148,81 @@ CREATE PROCEDURE family_johansen.getPostsByAuthor(authorId INT, offset INT) /* z
 	END
 	//
 DELIMITER ;
+
+/* getPostsByTag() */
+
+DROP PROCEDURE IF EXISTS family_johansen.getPostsByTag;
+DELIMITER //
+CREATE PROCEDURE family_johansen.getPostsByTag(tag VARCHAR(255), offset INT) /* zero-based offset */
+	BEGIN
+		SET @tag = CONCAT('%', tag, '%');
+		SET @offset = offset * 10;
+		SET @postSelectVar = CONCAT('SELECT * ',
+		                            'FROM family_johansen.posts ',
+		                            'WHERE tags LIKE ? ',
+		                            'ORDER BY post_date DESC ',
+		                            'LIMIT ?, 10');
+		PREPARE postSelectStmt FROM @postSelectVar;
+		EXECUTE postSelectStmt USING @tag, @offset;
+		DEALLOCATE PREPARE postSelectStmt;
+	END
+	//
+DELIMITER ;
+
+/* updatePost() */
+
+DROP PROCEDURE IF EXISTS family_johansen.updatePost;
+DELIMITER //
+CREATE PROCEDURE family_johansen.updatePost(id INT,
+                                            featured VARCHAR(255),
+                                            video TINYINT,
+                                            title VARCHAR(255),
+                                            normed VARCHAR(255),
+                                            postDate DATE,
+                                            author INT,
+                                            tags VARCHAR(255),
+                                            body TEXT)
+	BEGIN
+		SET @id = id;
+		SET @featured = featured;
+		SET @video = video;
+		SET @title = title;
+		SET @normed = normed;
+		SET @postDate = postDate;
+		SET @author = author;
+		SET @tags = tags;
+		SET @body = body;
+		SET @postUpdateVar = CONCAT('UPDATE family_johansen.posts ',
+		                            'SET featured         = ?, ',
+		                            '    video            = ?, ',
+		                            '    title            = ?, ',
+		                            '    normalized_title = ?, ',
+		                            '    post_date        = ?, ',
+		                            '    author           = ?, ',
+		                            '    tags             = ?, ',
+		                            '    body             = ?  ',
+		                            'WHERE id = ? ',
+		                            'LIMIT 1');
+		PREPARE postUpdateStmt FROM @postUpdateVar;
+		EXECUTE postUpdateStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @id;
+		SELECT @id AS id;
+		DEALLOCATE PREPARE postUpdateStmt;
+	END
+	//
+DELIMITER ;
+
+/* deletePost() */
+
+DROP PROCEDURE IF EXISTS family_johansen.deletePost;
+DELIMITER //
+CREATE PROCEDURE family_johansen.deletePost(id INT)
+	BEGIN
+		SET @id = id;
+		SET @postDeleteVar = CONCAT('DELETE FROM family_johansen.posts ',
+		                            'WHERE id = ?');
+		PREPARE postDeleteStmt FROM @postDeleteVar;
+		EXECUTE postDeleteStmt USING @id;
+		DEALLOCATE PREPARE postDeleteStmt;
+	END
+	//
+DELIMITER ;

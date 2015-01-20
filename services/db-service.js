@@ -122,6 +122,17 @@ module.exports = {
     });
   },
 
+  deletePost: function(id, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL deletePost(?)', [id], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        callback();
+      });
+    });
+  },
+
   shutDown: function() {
     pool.end();
   }
