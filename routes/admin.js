@@ -2,9 +2,13 @@ var express = require('express');
 var router = express.Router();
 var dbService = null;
 
-/* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  // WYLO .... Come up with a design and implement this bad boy. Note that your db-service and SQL do not yet support pagination!
+  res.send({number:22});
+});
+
+router.post('/', function(req, res) {
+
 });
 
 module.exports = function(databaseService) {
