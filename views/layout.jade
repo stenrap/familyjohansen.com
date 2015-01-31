@@ -1,7 +1,22 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Admin Login - Family Johansen Blog
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    <!--[if lt IE 9]>
+      script(src='/js/lib/html5shiv.min.js')
+      script(src='/js/lib/respond.min.js')
+    <![endif]-->
   body
-    block content
+    .container-fluid
+      block content
+      script(src='/js/lib/jquery.min.js')
+      script(src='/js/lib/bootstrap.min.js')
+      script(src='/js/lib/underscore.min.js')
+      script(src='/js/lib/backbone.min.js')
+      block template
+      block scripts

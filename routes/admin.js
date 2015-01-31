@@ -3,7 +3,7 @@ var router = express.Router();
 var dbService = null;
 
 router.get('/', function(req, res) {
-  // WYLO .... Come up with a design and implement this bad boy. Note that your db-service and SQL do not yet support pagination!
+  // WYLO .... Come up with a design and implement this bad boy.
   res.send({number:22});
 });
 

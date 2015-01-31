@@ -66,4 +66,45 @@ Routes:
         http://www.familyjohansen.com/our-story
     
     -
-        
+
+
+Templates:
+
+    - All templates are written in Jade.
+
+    - Each template is compiled into JavaScript so that client-side rendering can be done by passing a model to a JavaScript function.
+
+    - Compiled templates are accessible by appending their path to the 'templates' namespace. For example:
+
+        + If you have a template in this file...
+
+            views/admin/post.jade
+
+        ...then in JavaScript you would make this call to render it (after getting the model): templates.admin.post(model);
+
+    - So the workflow is:
+
+        + Create or modify a template in Jade
+
+        + Invoke Jade from the command prompt (via a grunt task) to compile the templates into a [name]-template.js file
+
+        + Include the appropriate [name]-template.js file in each rendered page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
