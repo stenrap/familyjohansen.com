@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+input[type=text].form-control,
+input[type=password].form-control {
+  height: 46px;
+}
+
+/* WYLO .... Now that you've got the login rendering, get it sized, centered, and functioning! */

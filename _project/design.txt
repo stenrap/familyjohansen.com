@@ -74,13 +74,13 @@ Templates:
 
     - Each template is compiled into JavaScript so that client-side rendering can be done by passing a model to a JavaScript function.
 
-    - Compiled templates are accessible by appending their path to the 'templates' namespace. For example:
+    - Compiled templates are accessible as functions of the form 'template_path_to_file(model)', where the path begins at /views.
 
-        + If you have a template in this file...
+        + For example, if you have a template in this file...
 
-            views/admin/post.jade
+            /views/admin/post.jade
 
-        ...then in JavaScript you would make this call to render it (after getting the model): templates.admin.post(model);
+        ...then in JavaScript you would make this call to render it (after getting the model): template_admin_post(model);
 
     - So the workflow is:
 
@@ -89,6 +89,10 @@ Templates:
         + Invoke Jade from the command prompt (via a grunt task) to compile the templates into a [name]-template.js file
 
         + Include the appropriate [name]-template.js file in each rendered page
+
+    - Here's an example of compiling a template into JavaScript:
+
+        ./node_modules/jade/bin/jade.js --client --name template_admin_login --out ./public/js/templates --no-debug ./views/admin/login.jade
 
 
 

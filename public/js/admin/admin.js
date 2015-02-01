@@ -5,8 +5,12 @@ $(function() {
 
   FJ.LoginView = Backbone.View.extend({
 
+    initialize: function() {
+      this.render();
+    },
+
     render: function() {
-      // Here's what I'd like to be able to do: this.$el.html(templates.admin.login())...
+      this.$el.html(template_admin_login());
     }
 
   });
