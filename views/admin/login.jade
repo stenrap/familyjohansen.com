@@ -1,8 +1,6 @@
-extends ../layout
+form
+  input.form-control(type='text', name='username', placeholder='Username')
+  input.form-control(type='password', name='password', placeholder='Password')
+  button.btn.btn-lg.btn-primary(type='submit')
 
-block content
-  #content
-block template
-  script(src='/js/templates/admin-template.js')
-block scripts
-  WYLO .... include the admin script, then figure out how the freak to compile with Jade...
+  // WYLO .... See if you can compile this bad boy and render it from the client side (you can worry about stying it later)
