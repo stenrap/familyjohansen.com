@@ -6,8 +6,8 @@ router.get('/', function(req, res) {
   res.render('admin/admin');
 });
 
-router.post('/', function(req, res) {
-
+router.post('/login', function(req, res) {
+  
 });
 
 module.exports = function(databaseService) {
