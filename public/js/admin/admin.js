@@ -11,6 +11,16 @@ $(function() {
 
     render: function() {
       this.$el.html(template_admin_login());
+    },
+
+    events: {
+      'click #admin-login-button' : 'onClickLogin'
+    },
+
+    onClickLogin : function(event) {
+      event.preventDefault();
+      var data = $(this).serializeForm($('#admin-login-form'));
+      // WYLO .... POST it baby!
     }
 
   });
@@ -18,8 +28,8 @@ $(function() {
   FJ.AdminRouter = Backbone.Router.extend({
 
     routes: {
-      "":      "login",
-      "login": "login"
+      '':      'login',
+      'login': 'login'
     },
 
     login: function() {
