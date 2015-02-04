@@ -7,7 +7,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-  // WYLO .... You currently have the client-side POSTing here via Ajax. What about passport's ability to redirect?
+  // WYLO .... Try implementing the custom callback from the passport authenticate documentation (this gist might
+  //           be useful too: https://gist.github.com/cultofmetatron/5349630). Hopefully this will allow you to
+  //           stay with your Ajax approach.
 });
 
 router.get('/test', function(req, res) {
