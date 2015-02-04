@@ -29,13 +29,30 @@ module.exports = {
             if (err) throw err;
             if (result) {
               delete user.password;
-              callback(user);
+              callback(null, user);
             } else {
-              callback();
+              callback(null, null);
             }
           });
         } else {
-          callback();
+          callback('Internal error.', null);
+        }
+      });
+    });
+  },
+
+  getUserById: function(id, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL getUserById(?)', [id], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        if (results[0][0]) {
+          var user = results[0][0];
+          delete user.password;
+          callback(null, user);
+        } else {
+          callback('No user with that ID.', null);
         }
       });
     });
