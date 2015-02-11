@@ -18,9 +18,16 @@ $(function() {
     },
 
     onClickLogin : function(event) {
-      event.preventDefault();
+      // WYLO .... Implement validation
+      // TODO: Show a spinner
       var data = $(this).serializeForm($('#admin-login-form'));
-      // WYLO .... POST it baby!
+      $.ajax({
+        data: data,
+        type: 'POST',
+        url: '/admin/login'
+      }).done(function(result) {
+        console.log(result);
+      });
     }
 
   });

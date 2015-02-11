@@ -11,9 +11,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var flash = require('connect-flash');
 
-var index = require('./routes/index')(dbService);
-var admin = require('./routes/admin')(dbService);
-
 var app = express();
 
 // view engine setup
@@ -49,13 +46,16 @@ passport.use(new LocalStrategy(
     dbService.verifyUser(username, password, function(err, user) {
       if (err) return done(err);
       if (!user) {
-        return done(null, false, {message: 'Invalid username or password.'});
+        return done(null, false);
       } else {
         return done(null, user);
       }
     });
   }
 ));
+
+var index = require('./routes/index')(dbService);
+var admin = require('./routes/admin')(dbService, passport);
 
 app.use('/', index);
 app.use('/admin', admin);

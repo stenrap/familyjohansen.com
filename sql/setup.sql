@@ -1,8 +1,8 @@
 /*
     Setup script for the family_johansen database.
     
-    MySQL should be starting automatically on your Mac. If it isn't, try typing: mysql.server start
-    
+    MySQL should be starting automatically on your Mac. If it isn't, try typing: sudo mysql.server start
+
     To insert a new author, create a bcrypt-hashed password using 'password-hasher.js', then plug it into 'createUser.sql'
  */
 
