@@ -3,4 +3,5 @@ form#admin-login-form
     input.form-control(type='text', name='username', placeholder='Username', autofocus, required)
   .form-group
     input.form-control(type='password', name='password', placeholder='Password', required)
-  button#admin-login-button.btn.btn-lg.btn-primary(type='button') Log In
+  button#admin-login-button.btn.btn-lg.btn-primary.ladda-button(type='submit', data-style='slide-down')
+    span.ladda-label Log In

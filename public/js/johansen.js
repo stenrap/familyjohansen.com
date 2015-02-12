@@ -1,4 +1,5 @@
-/* Application-wide functions */
+'use strict';
+var FJ = FJ || {};
 
 jQuery.fn.extend({
 
@@ -11,6 +12,15 @@ jQuery.fn.extend({
       }
     }
     return formData;
+  },
+
+  startSpin: function(button) {
+    FJ.ladda = Ladda.create(button);
+    FJ.ladda.start();
+  },
+
+  stopSpin: function() {
+    FJ.ladda.stop();
   }
 
 });

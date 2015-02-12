@@ -7,6 +7,11 @@ $(function() {
 
     initialize: function() {
       this.render();
+      $('#admin-login-form').validate({
+        errorPlacement: function() {
+          return false;
+        }
+      });
     },
 
     render: function() {
@@ -18,15 +23,21 @@ $(function() {
     },
 
     onClickLogin : function(event) {
-      // WYLO .... Implement validation
-      // TODO: Show a spinner
-      var data = $(this).serializeForm($('#admin-login-form'));
+      event.preventDefault();
+      var form = $('#admin-login-form');
+      if (!form.valid()) {
+        return;
+      }
+      $(this).startSpin(event.currentTarget);
+      var data = $(this).serializeForm(form);
       $.ajax({
         data: data,
         type: 'POST',
         url: '/admin/login'
       }).done(function(result) {
-        console.log(result);
+        // WYLO .... Check for an error (such as "Invalid username or password") and handle it.
+        //           Then handle the success case. Also need to support password reset...
+        $(this).stopSpin();
       });
     }
 
