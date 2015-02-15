@@ -107,18 +107,12 @@ Templates:
             {
                 "templates" : [
                     {
-                        "name" : "admin",
-                        "input" : [
-                            "/path/to/admin/login.jade",
-                            "/path/to/admin/reset.jade"
-                        ]
+                        name : 'admin',
+                        input : ['/path/to/admin/login.jade', '/path/to/admin/reset.jade']
                     },
                     {
-                        "name" : "posts",
-                        "input" : [
-                            "path/to/posts/list.jade",
-                            "path/to/posts/edit.jade"
-                        ]
+                        name : 'posts',
+                        input : ['path/to/posts/list.jade', 'path/to/posts/edit.jade']
                     }
                 ],
             }
