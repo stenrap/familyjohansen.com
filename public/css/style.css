@@ -12,7 +12,7 @@ input[type=password].form-control {
   height: 46px;
 }
 
-#admin-login-form {
+#admin-login-form, #admin-reset-form {
   margin: 0 auto;
   max-width: 350px;
 }
