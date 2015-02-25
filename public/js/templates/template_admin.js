@@ -11,6 +11,6 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"email\" name=\"email\" placeholder=\"Email Address\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Reset Password</span></button></form>");;return buf.join("");
+buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"email\" name=\"email\" placeholder=\"Email Address\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Reset Password</span></button><button id=\"reset-back\" type=\"button\" class=\"btn btn-lg btn-primary\">Back</button></form>");;return buf.join("");
 }
 

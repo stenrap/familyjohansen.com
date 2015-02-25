@@ -17,7 +17,7 @@ input[type=password].form-control {
   max-width: 350px;
 }
 
-#login-help {
+#login-help, #reset-back {
   float: right;
 }
 

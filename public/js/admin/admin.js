@@ -6,24 +6,37 @@ $(function() {
   FJ.LoginView = Backbone.View.extend({
 
     initialize: function() {
-      this.render();
+      this.renderLogin();
+    },
+
+    renderLogin: function() {
+      this.$el.html(template_admin_login());
       $('#admin-login-form').validate({
         errorPlacement: function() {
           return false;
         }
       });
+      $('input[name="username"]').focus();
     },
 
-    render: function() {
-      this.$el.html(template_admin_login());
+    renderHelp: function() {
+      this.$el.html(template_admin_reset());
+      $('#admin-reset-form').validate({
+        errorPlacement: function() {
+          return false;
+        }
+      });
+      $('input[name="email"]').focus();
     },
 
     events: {
       'click #admin-login-button' : 'onClickLogin',
-      'click #login-help' : 'onClickHelp'
+      'click #login-help' : 'renderHelp',
+      'click #admin-reset-button' : 'resetPassword',
+      'click #reset-back' : 'renderLogin'
     },
 
-    onClickLogin : function(event) {
+    onClickLogin: function(event) {
       event.preventDefault();
       var form = $('#admin-login-form');
       if (!form.valid()) {
@@ -38,14 +51,12 @@ $(function() {
       }).done(function(result) {
         // WYLO 2 .... Check for an error (such as "Invalid username or password") and handle it.
         //           Then handle the success case.
-        $(this).stopSpin();
+        $(this).stopSpin(); // WYLO 3 .... Move this into the other $.ajax() callback that always fires
       });
     },
 
-    onClickHelp: function(event) {
-      this.$el.html(template_admin_reset());
-      $('input[name="email"]').focus();
-      // WYLO 1 .... Update reset.jade to have a 'Back' button. Then implement actual password reset.
+    resetPassword: function() {
+      // WYLO 1 .... Spin the button, validate the form, then get the actual password reset working.
     }
 
   });
