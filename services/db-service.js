@@ -23,7 +23,7 @@ module.exports = {
       connection.query('CALL getUser(?)', [username], function(err, results) {
         if (err) throw err;
         connection.release();
-        if (results[0][0]) {
+        if (results && results[0] && results[0][0]) {
           var user = results[0][0];
           bcrypt.compare(password, user.password, function(err, result) {
             if (err) throw err;
@@ -41,13 +41,29 @@ module.exports = {
     });
   },
 
+  resetToken: function(email, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL resetToken(?)', [email], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        if (results && results[0] && results[0][0] && results[0][0].token) {
+          var token = results[0][0].token;
+          callback(null, token);
+        } else {
+          callback('No user with that email address.', null);
+        }
+      });
+    });
+  },
+
   getUserById: function(id, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
       connection.query('CALL getUserById(?)', [id], function(err, results) {
         if (err) throw err;
         connection.release();
-        if (results[0][0]) {
+        if (results && results[0] && results[0][0]) {
           var user = results[0][0];
           delete user.password;
           callback(null, user);

@@ -12,7 +12,7 @@ router.post('/login', function(req, res) {
   // (this gist was useful too: https://gist.github.com/cultofmetatron/5349630).
   passport.authenticate('local', function(err, user) {
     if (err) return res.send({error: err.message});
-    if (!user) return res.send({error: 'Invalid username or password.'})
+    if (!user) return res.send({error: 'Invalid username or password.'});
     req.login(user, function(err) {
       if (err) return res.send({error: err})
       return res.send({
@@ -24,6 +24,13 @@ router.post('/login', function(req, res) {
       });
     });
   })(req, res);
+});
+
+router.post('/reset', function(req, res) {
+  if (!req.body.email) {
+    return res.send({error: 'Please provide your email address.'});
+  }
+  // WYLO 1 .... Pass the email address to dbService.resetToken() and handle success/failure.
 });
 
 router.get('/test', ensureAuthenticated, function(req, res) {

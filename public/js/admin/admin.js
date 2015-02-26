@@ -49,14 +49,31 @@ $(function() {
         type: 'POST',
         url: '/admin/login'
       }).done(function(result) {
-        // WYLO 2 .... Check for an error (such as "Invalid username or password") and handle it.
-        //           Then handle the success case.
-        $(this).stopSpin(); // WYLO 3 .... Move this into the other $.ajax() callback that always fires
+        // WYLO 3 .... Check for an error (such as "Invalid username or password") and handle it.
+        //             Then handle the success case.
+      }).always(function() {
+        $(this).stopSpin();
       });
     },
 
     resetPassword: function() {
-      // WYLO 1 .... Spin the button, validate the form, then get the actual password reset working.
+      event.preventDefault();
+      var form = $('#admin-reset-form');
+      if (!form.valid()) {
+        return;
+      }
+      $(this).startSpin(event.currentTarget);
+      var data = $(this).serializeForm(form);
+      $.ajax({
+        data: data,
+        type: 'POST',
+        url: '/admin/reset'
+      }).done(function(result) {
+        // WYLO 2 .... Check for an error (such as "Invalid email address") and handle it.
+        //             Then handle the success case.
+      }).always(function() {
+        $(this).stopSpin();
+      });
     }
 
   });
