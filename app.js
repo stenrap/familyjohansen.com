@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var dbConfig = require('config').get('db.config');
-var dbService = require('./services/db-service').init(dbConfig);
+var appConfig = require('config');
+var dbService = require('./services/db-service').init(appConfig.get('config.db'));
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
@@ -55,7 +55,7 @@ passport.use(new LocalStrategy(
 ));
 
 var index = require('./routes/index')(dbService);
-var admin = require('./routes/admin')(dbService, passport);
+var admin = require('./routes/admin')(dbService, passport, appConfig.get('config.email.noreply'));
 
 app.use('/', index);
 app.use('/admin', admin);

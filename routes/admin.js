@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var dbService = null;
 var passport = null;
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+var transport = null;
 
 router.get('/', function(req, res) {
   res.render('admin/admin');
@@ -30,7 +33,24 @@ router.post('/reset', function(req, res) {
   if (!req.body.email) {
     return res.send({error: 'Please provide your email address.'});
   }
-  // WYLO 1 .... Pass the email address to dbService.resetToken() and handle success/failure.
+  dbService.resetToken(req.body.email, function(err, token) {
+    if (err) return res.send({error: err.message});
+    var mailOptions = {
+      from: 'No Reply <no-reply@familyjohansen.com>',
+      to: req.body.email,
+      subject: 'Password Reset - Family Johansen Blog',
+      text: 'Hi,\n\n' +
+            'If you need to reset your password for the Family Johansen blog, click here:\n\n' +
+            'http://www.familyjohansen.com/admin/reset/'+token+'\n\n' +
+            'Otherwise, just delete this email.\n\n' +
+            'Warm regards,\n' +
+            'Family Johansen Admin'
+    };
+    transport.sendMail(mailOptions, function(err, info){
+      if (err) return res.send({error: err});
+      return res.send({success: true});
+    });
+  });
 });
 
 router.get('/test', ensureAuthenticated, function(req, res) {
@@ -42,8 +62,17 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/admin');
 }
 
-module.exports = function(databaseService, injectedPassport) {
+module.exports = function(databaseService, injectedPassport, emailConfig) {
   dbService = databaseService;
   passport = injectedPassport;
+  transport = nodemailer.createTransport(smtpTransport({
+    host: 'box428.bluehost.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: emailConfig.user,
+      pass: emailConfig.password
+    }
+  }));
   return router;
 };

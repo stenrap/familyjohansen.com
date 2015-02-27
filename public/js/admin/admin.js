@@ -49,14 +49,14 @@ $(function() {
         type: 'POST',
         url: '/admin/login'
       }).done(function(result) {
-        // WYLO 3 .... Check for an error (such as "Invalid username or password") and handle it.
-        //             Then handle the success case.
+        // WYLO 2 .... Check for an error (such as "Invalid username or password") and handle it.
+        //             Then handle the success case (show the list of posts)!
       }).always(function() {
         $(this).stopSpin();
       });
     },
 
-    resetPassword: function() {
+    resetPassword: function(event) {
       event.preventDefault();
       var form = $('#admin-reset-form');
       if (!form.valid()) {
@@ -69,8 +69,8 @@ $(function() {
         type: 'POST',
         url: '/admin/reset'
       }).done(function(result) {
-        // WYLO 2 .... Check for an error (such as "Invalid email address") and handle it.
-        //             Then handle the success case.
+        // WYLO 1 .... Check for an error (such as "Invalid email address") and handle it.
+        //             Then handle the success case (display a message and return to the login).
       }).always(function() {
         $(this).stopSpin();
       });

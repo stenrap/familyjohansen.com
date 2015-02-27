@@ -1,8 +1,14 @@
 {
+  "config": {
     "db": {
-        "config": {
-            "user": "FAMILY_JOHANSEN_DB_USER",
-            "password": "FAMILY_JOHANSEN_DB_PASSWORD"
-        }
+      "user": "FAMILY_JOHANSEN_DB_USER",
+      "password": "FAMILY_JOHANSEN_DB_PASSWORD"
+    },
+    "email": {
+      "noreply": {
+        "user": "FAMILY_JOHANSEN_NO_REPLY_USER",
+        "password": "FAMILY_JOHANSEN_NO_REPLY_PASSWORD"
+      }
     }
+  }
 }

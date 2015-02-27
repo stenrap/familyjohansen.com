@@ -130,6 +130,14 @@ Templates:
                 template_posts_edit()
 
 
+Email:
+
+    Username:	     FAMILY_JOHANSEN_NO_REPLY_USER
+    Password:        FAMILY_JOHANSEN_NO_REPLY_PASSWORD
+    Outgoing Server: box428.bluehost.com
+    SMTP Port:       465
+
+
 
 
 
