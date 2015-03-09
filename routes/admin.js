@@ -53,6 +53,10 @@ router.post('/reset', function(req, res) {
   });
 });
 
+router.get('/reset/:token', function(req, res) {
+  // TODO .... Get the token from req.params.token and, if it's valid in the db, render the new password page
+});
+
 router.get('/test', ensureAuthenticated, function(req, res) {
   // For testing auth...
 });
