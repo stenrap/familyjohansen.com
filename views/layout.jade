@@ -14,6 +14,17 @@ html(lang='en')
     <![endif]-->
   body
     .container-fluid
+      <!-- Begin info modal with OK button -->
+      #info-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='info-modal-title', aria-hidden='true')
+        .modal-dialog.modal-sm
+          .modal-content
+            .modal-header
+              h4#info-modal-title.modal-title
+            .modal-body
+              p#info-modal-message
+            .modal-footer
+              button.btn.btn-primary(type='button', data-dismiss='modal') OK
+      <!-- Eng info modal -->
       #content
       script(src='/js/lib/jquery.min.js')
       script(src='/js/lib/jquery.validate.min.js')

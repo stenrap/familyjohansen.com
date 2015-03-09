@@ -94,41 +94,6 @@ Templates:
 
         ./node_modules/jade/bin/jade.js --client --name template_admin_login --out ./public/js/templates --no-debug ./views/admin/login.jade
 
-    - WYLO .... Learn how to make this happen with Grunt ... The much more flexible workflow you'd like to have (using grunt) is:
-
-        + A configuration that allows you to specify:
-
-            > The name of a .jade template file
-            > The name that should be given to each function associated with a .jade template file during compilation
-            > The full path and name of the .js file into which the template function(s) will be written
-
-        + Following is an example configuration:
-
-            {
-                "templates" : [
-                    {
-                        name : 'admin',
-                        input : ['/path/to/admin/login.jade', '/path/to/admin/reset.jade']
-                    },
-                    {
-                        name : 'posts',
-                        input : ['path/to/posts/list.jade', 'path/to/posts/edit.jade']
-                    }
-                ],
-            }
-
-        + The above configuration produces the following:
-
-            > A template file named template_admin.js with two functions:
-
-                template_admin_login()
-                template_admin_reset()
-
-            > A template file named template_posts.js with two functions:
-
-                template_posts_list()
-                template_posts_edit()
-
 
 Email:
 

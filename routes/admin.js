@@ -34,7 +34,7 @@ router.post('/reset', function(req, res) {
     return res.send({error: 'Please provide your email address.'});
   }
   dbService.resetToken(req.body.email, function(err, token) {
-    if (err) return res.send({error: err.message});
+    if (err) return res.send({error: err});
     var mailOptions = {
       from: 'No Reply <no-reply@familyjohansen.com>',
       to: req.body.email,

@@ -19,21 +19,23 @@ $(function() {
       $('input[name="username"]').focus();
     },
 
-    renderHelp: function() {
-      this.$el.html(template_admin_reset());
-      $('#admin-reset-form').validate({
-        errorPlacement: function() {
-          return false;
-        }
+    showHelp: function() {
+      var resetModel = $('#reset-modal');
+      resetModel.modal();
+      resetModel.one('shown.bs.modal', function(event) {
+        $('#admin-reset-form').validate({
+          errorPlacement: function() {
+            return false;
+          }
+        });
+        $('input[name="email"]').focus();
       });
-      $('input[name="email"]').focus();
     },
 
     events: {
       'click #admin-login-button' : 'onClickLogin',
-      'click #login-help' : 'renderHelp',
-      'click #admin-reset-button' : 'resetPassword',
-      'click #reset-back' : 'renderLogin'
+      'click #login-help' : 'showHelp',
+      'click #admin-reset-button' : 'resetPassword'
     },
 
     onClickLogin: function(event) {
@@ -49,8 +51,8 @@ $(function() {
         type: 'POST',
         url: '/admin/login'
       }).done(function(result) {
-        // WYLO 2 .... Check for an error (such as "Invalid username or password") and handle it.
-        //             Then handle the success case (show the list of posts)!
+        // TODO .... Check for an error (such as "Invalid username or password") and handle it.
+        //           Then handle the success case (show the list of posts)!
       }).always(function() {
         $(this).stopSpin();
       });
@@ -63,14 +65,22 @@ $(function() {
         return;
       }
       $(this).startSpin(event.currentTarget);
+      var view = this;
       var data = $(this).serializeForm(form);
       $.ajax({
         data: data,
         type: 'POST',
         url: '/admin/reset'
       }).done(function(result) {
-        // WYLO 1 .... Check for an error (such as "Invalid email address") and handle it.
-        //             Then handle the success case (display a message and return to the login).
+        var resetModel = $('#reset-modal');
+        resetModel.modal('hide');
+        resetModel.one('hidden.bs.modal', function(event) {
+          if (result.error) {
+            $(this).showInfo('Error', result.error);
+          } else {
+            $(this).showInfo('Success!', 'Check your email for password reset instructions.');
+          }
+        });
       }).always(function() {
         $(this).stopSpin();
       });

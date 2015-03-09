@@ -21,6 +21,12 @@ jQuery.fn.extend({
 
   stopSpin: function() {
     FJ.ladda.stop();
+  },
+
+  showInfo: function(title, message) {
+    $('#info-modal-title').html(title);
+    $('#info-modal-message').html(message);
+    $('#info-modal').modal();
   }
 
 });
