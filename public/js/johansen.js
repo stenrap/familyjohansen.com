@@ -23,10 +23,15 @@ jQuery.fn.extend({
     FJ.ladda.stop();
   },
 
-  showInfo: function(title, message) {
+  showInfo: function(title, message, thisContext, callback) {
     $('#info-modal-title').html(title);
     $('#info-modal-message').html(message);
     $('#info-modal').modal();
+    if (callback) {
+      $('#info-modal').one('hidden.bs.modal', function (e) {
+        callback(thisContext)
+      })
+    }
   }
 
 });

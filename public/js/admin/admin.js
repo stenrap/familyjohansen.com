@@ -3,20 +3,21 @@ var FJ = FJ || {};
 
 $(function() {
 
+  /* Login View */
+
   FJ.LoginView = Backbone.View.extend({
 
     initialize: function(options) {
       this.router = options.router;
-      this.renderLogin();
+      this.render();
     },
 
     events: {
       'click #admin-login-button' : 'onClickLogin',
-      'click #login-help' : 'showHelp',
-      'click #admin-reset-button' : 'resetPassword'
+      'click #login-help' : 'showHelp'
     },
 
-    renderLogin: function() {
+    render: function() {
       this.$el.html(template_admin_login());
       $('#admin-login-form').validate({
         errorPlacement: function() {
@@ -28,18 +29,6 @@ $(function() {
 
     showHelp: function() {
       this.router.navigate('help', {trigger: true});
-      /*
-      var resetModel = $('#reset-modal');
-      resetModel.modal();
-      resetModel.one('shown.bs.modal', function(event) {
-        $('#admin-reset-form').validate({
-          errorPlacement: function() {
-            return false;
-          }
-        });
-        $('input[name="email"]').focus();
-      });
-      */
     },
 
     onClickLogin: function(event) {
@@ -60,6 +49,32 @@ $(function() {
       }).always(function() {
         $(this).stopSpin();
       });
+    }
+
+  });
+
+
+  /* Help View */
+
+  FJ.HelpView = Backbone.View.extend({
+
+    initialize: function(options) {
+      this.router = options.router;
+      this.render();
+    },
+
+    events: {
+      'click #admin-reset-button' : 'resetPassword'
+    },
+
+    render: function() {
+      this.$el.html(template_admin_help());
+      $('#admin-reset-form').validate({
+        errorPlacement: function() {
+          return false;
+        }
+      });
+      $('input[name="email"]').focus();
     },
 
     resetPassword: function(event) {
@@ -68,6 +83,7 @@ $(function() {
       if (!form.valid()) {
         return;
       }
+      $('input[name="email"]').attr('readonly', true);
       $(this).startSpin(event.currentTarget);
       var view = this;
       var data = $(this).serializeForm(form);
@@ -76,31 +92,31 @@ $(function() {
         type: 'POST',
         url: '/admin/reset'
       }).done(function(result) {
-        var resetModel = $('#reset-modal');
-        resetModel.modal('hide');
-        resetModel.one('hidden.bs.modal', function(event) {
-          if (result.error) {
-            $(this).showInfo('Error', result.error);
-          } else {
-            $(this).showInfo('Success!', 'Check your email for password reset instructions.');
-          }
-        });
+        if (result.error) {
+          $(this).showInfo('Error', result.error, view, view.showLogin);
+        } else {
+          $(this).showInfo('Success!', 'Check your email for password reset instructions.', view, view.showLogin);
+        }
       }).always(function() {
         $(this).stopSpin();
       });
+    },
+
+    showLogin: function(view) {
+      view.router.navigate('login', {trigger: true});
     }
 
   });
 
-  FJ.HelpView = Backbone.View.extend({
 
-  });
+  /* Admin Router */
 
   FJ.AdminRouter = Backbone.Router.extend({
 
     routes: {
-      '':     'login',
-      'help': 'help'
+      '':      'login',
+      'login': 'login',
+      'help':  'help'
     },
 
     login: function() {
@@ -111,7 +127,10 @@ $(function() {
     },
 
     help: function() {
-      console.log('Hit the help route...');
+      new FJ.HelpView({
+        el: '#content',
+        router: this
+      })
     }
 
   });

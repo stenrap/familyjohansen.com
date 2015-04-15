@@ -6,17 +6,3 @@ form#admin-login-form
   button#admin-login-button.btn.btn-lg.btn-primary.ladda-button(type='submit', data-style='slide-down')
     span.ladda-label Log In
   button#login-help.btn.btn-lg.btn-primary(type='button') Help
-
-#reset-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='reset-modal-title', aria-hidden='true')
-  .modal-dialog.modal-sm
-    .modal-content
-      .modal-header
-        button.close(type='button', data-dismiss='modal', aria-label='Close')
-          span(aria-hidden='true') &times;
-        h4#reset-modal-title.modal-title Need a password reset?
-      .modal-body
-        form#admin-reset-form
-          .form-group
-            input.form-control(type='email', name='email', placeholder='Email Address', autofocus, required)
-          button#admin-reset-button.btn.btn-lg.btn-primary.ladda-button(type='submit', data-style='slide-down')
-            span.ladda-label Reset Password
