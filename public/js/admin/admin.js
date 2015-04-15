@@ -5,8 +5,15 @@ $(function() {
 
   FJ.LoginView = Backbone.View.extend({
 
-    initialize: function() {
+    initialize: function(options) {
+      this.router = options.router;
       this.renderLogin();
+    },
+
+    events: {
+      'click #admin-login-button' : 'onClickLogin',
+      'click #login-help' : 'showHelp',
+      'click #admin-reset-button' : 'resetPassword'
     },
 
     renderLogin: function() {
@@ -20,6 +27,8 @@ $(function() {
     },
 
     showHelp: function() {
+      this.router.navigate('help', {trigger: true});
+      /*
       var resetModel = $('#reset-modal');
       resetModel.modal();
       resetModel.one('shown.bs.modal', function(event) {
@@ -30,12 +39,7 @@ $(function() {
         });
         $('input[name="email"]').focus();
       });
-    },
-
-    events: {
-      'click #admin-login-button' : 'onClickLogin',
-      'click #login-help' : 'showHelp',
-      'click #admin-reset-button' : 'resetPassword'
+      */
     },
 
     onClickLogin: function(event) {
@@ -88,17 +92,26 @@ $(function() {
 
   });
 
+  FJ.HelpView = Backbone.View.extend({
+
+  });
+
   FJ.AdminRouter = Backbone.Router.extend({
 
     routes: {
-      '':      'login',
-      'login': 'login'
+      '':     'login',
+      'help': 'help'
     },
 
     login: function() {
       new FJ.LoginView({
-        el: '#content'
+        el: '#content',
+        router: this
       })
+    },
+
+    help: function() {
+      console.log('Hit the help route...');
     }
 
   });
