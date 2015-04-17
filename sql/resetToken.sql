@@ -17,7 +17,7 @@ CREATE PROCEDURE family_johansen.resetToken(em VARCHAR(50))
 			IF @authorId IS NOT NULL THEN
 			  SET @uuid = UUID();
 				SET @authorUpdateVar = CONCAT('UPDATE family_johansen.authors ',
-				                              'SET token = ? ',
+				                              'SET token = ?, reset_date = CURDATE() ',
 				                              'WHERE id = ?');
 				PREPARE authorUpdateStmt FROM @authorUpdateVar;
 				EXECUTE authorUpdateStmt USING @uuid, @authorId;

@@ -1,9 +1,12 @@
+USE family_johansen;
+
 INSERT INTO authors
 VALUES(
   NULL,
   'bridget',
   '',
   'email@bridgetjohansen.com',
+  NULL,
   NULL
 );
 
@@ -13,5 +16,6 @@ VALUES(
   'rob',
   '',
   'rob.johansen@gmail.com',
+  NULL,
   NULL
 );

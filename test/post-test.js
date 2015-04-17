@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 describe('The db service', function() {
 
-  var dbConfig = require('config').get('db.config');
+  var dbConfig = require('config').get('config.db');
   var dbService = require('../services/db-service').init(dbConfig);
   var postId = 0;
   after(dbService.shutDown);

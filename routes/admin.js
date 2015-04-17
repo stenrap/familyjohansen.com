@@ -40,7 +40,7 @@ router.post('/reset', function(req, res) {
       to: req.body.email,
       subject: 'Password Reset - Family Johansen Blog',
       text: 'Hi,\n\n' +
-            'If you need to reset your password for the Family Johansen blog, click here:\n\n' +
+            'If you need to reset your password for the Family Johansen blog, click this link within 2 days:\n\n' +
             'http://www.familyjohansen.com/admin/reset/'+token+'\n\n' +
             'Otherwise, just delete this email.\n\n' +
             'Warm regards,\n' +

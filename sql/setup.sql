@@ -3,6 +3,14 @@
     
     MySQL should be starting automatically on your Mac. If it isn't, try typing: sudo mysql.server start
 
+    To login from a command prompt:
+
+      mysql -u root -D family_johansen -p
+
+    To execute this very setup.sql file:
+
+      mysql -u root -p < sql/setup.sql
+
     To insert a new author, create a bcrypt-hashed password using 'password-hasher.js', then plug it into 'createUser.sql'
  */
 
@@ -19,12 +27,15 @@ CREATE TABLE `authors` (
   `password` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
   `token` varchar(36) DEFAULT NULL,
+  `reset_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `username_INDEX` (`username`),
   KEY `email_INDEX` (`email`),
-  KEY `token_INDEX` (`token`)
+  KEY `token_INDEX` (`token`),
+  KEY `reset_INDEX` (`reset_date`)
 );
+
 
 CREATE TABLE `posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -84,7 +95,7 @@ CREATE PROCEDURE family_johansen.resetToken(em VARCHAR(50))
 			IF @authorId IS NOT NULL THEN
 			  SET @uuid = UUID();
 				SET @authorUpdateVar = CONCAT('UPDATE family_johansen.authors ',
-				                              'SET token = ? ',
+				                              'SET token = ?, reset_date = CURDATE() ',
 				                              'WHERE id = ?');
 				PREPARE authorUpdateStmt FROM @authorUpdateVar;
 				EXECUTE authorUpdateStmt USING @uuid, @authorId;
@@ -94,6 +105,31 @@ CREATE PROCEDURE family_johansen.resetToken(em VARCHAR(50))
 		IF @uuid IS NOT NULL THEN
 		  SELECT @uuid AS token;
 		END IF;
+	END
+	//
+DELIMITER ;
+
+/* verifyToken() */
+
+DROP PROCEDURE IF EXISTS family_johansen.verifyToken;
+DELIMITER //
+CREATE PROCEDURE family_johansen.verifyToken(tok VARCHAR(36))
+	BEGIN
+	    SET @token = tok;
+			SET @resetDate = NULL;
+			SET @valid = FALSE;
+			SET @resetDateLookupVar = CONCAT('SELECT reset_date ',
+			                                 'INTO @resetDate ',
+			                                 'FROM family_johansen.authors ',
+			                                 'WHERE LOWER(token) = LOWER(?)');
+			PREPARE resetDateLookupStmt FROM @resetDateLookupVar;
+			EXECUTE resetDateLookupStmt USING @token;
+			DEALLOCATE PREPARE resetDateLookupStmt;
+
+			IF @resetDate IS NOT NULL AND @resetDate <= @resetDate + INTERVAL 2 DAY THEN
+				SET @valid = TRUE;
+			END IF;
+		SELECT @valid AS valid;
 	END
 	//
 DELIMITER ;

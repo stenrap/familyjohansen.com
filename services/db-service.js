@@ -57,6 +57,22 @@ module.exports = {
     });
   },
 
+  verifyToken: function(token, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      connection.query('CALL verifyToken(?)', [token], function(err, results) {
+        if (err) throw err;
+        connection.release();
+        if (results && results[0] && results[0][0] && results[0][0].valid) {
+          var valid = results[0][0].valid == 1;
+          callback(null, valid);
+        } else {
+          callback('Invalid token.', null);
+        }
+      });
+    });
+  },
+
   getUserById: function(id, callback) {
     pool.getConnection(function(err, connection) {
       if (err) throw err;
