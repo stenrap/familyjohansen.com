@@ -54,7 +54,15 @@ router.post('/reset', function(req, res) {
 });
 
 router.get('/reset/:token', function(req, res) {
-  // TODO .... Get the token from req.params.token and, if it's valid in the db, render the new password page
+  var token = req.params.token
+  dbService.verifyToken(token, function(err, valid) {
+    if (!valid) {
+      res.clearCookie('token', {path: '/admin'});
+    } else {
+      res.cookie('token', token, {path: '/admin'});
+    }
+    res.redirect('/admin#reset');
+  });
 });
 
 router.get('/test', ensureAuthenticated, function(req, res) {

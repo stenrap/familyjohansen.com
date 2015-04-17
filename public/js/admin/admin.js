@@ -116,7 +116,8 @@ $(function() {
     routes: {
       '':      'login',
       'login': 'login',
-      'help':  'help'
+      'help':  'help',
+      'reset': 'reset'
     },
 
     login: function() {
@@ -131,6 +132,11 @@ $(function() {
         el: '#content',
         router: this
       })
+    },
+
+    reset: function() {
+      // WYLO .... Create an instance of FJ.ResetView for resetting the password...
+      console.log('The token is: '+$.cookie("token"));
     }
 
   });
