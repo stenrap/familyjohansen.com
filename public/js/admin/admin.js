@@ -83,7 +83,8 @@ $(function() {
       if (!form.valid()) {
         return;
       }
-      $('input[name="email"]').attr('readonly', true);
+      var emailInput = $('input[name="email"]');
+      emailInput.attr('readonly', true);
       $(this).startSpin(event.currentTarget);
       var view = this;
       var data = $(this).serializeForm(form);
@@ -93,7 +94,10 @@ $(function() {
         url: '/admin/reset'
       }).done(function(result) {
         if (result.error) {
-          $(this).showInfo('Error', result.error, view, view.showLogin);
+          $(this).showInfo('Error', result.error, null, function() {
+            emailInput.attr('readonly', false);
+            emailInput.focus();
+          });
         } else {
           $(this).showInfo('Success!', 'Check your email for password reset instructions.', view, view.showLogin);
         }
@@ -124,6 +128,9 @@ $(function() {
     },
 
     render: function() {
+      // WYLO 1 .... Handle a null/undefined token
+
+      // WYLO 2 .... Put the token in a hidden field
       this.$el.html(template_admin_reset());
       $('#admin-reset-form').validate({
         errorPlacement: function() {
@@ -139,7 +146,14 @@ $(function() {
       if (!form.valid()) {
         return;
       }
-      // WYLO ....
+      var password1Input = $('input[name="password1"]');
+      var password2Input = $('input[name="password2"]');
+      password1Input.attr('readonly', true);
+      password2Input.attr('readonly', true);
+      $(this).startSpin(event.currentTarget);
+      var view = this;
+      var data = $(this).serializeForm(form);
+      // WYLO 3 .... Post the new password (and hidden token) somewhere.
     }
 
   });
