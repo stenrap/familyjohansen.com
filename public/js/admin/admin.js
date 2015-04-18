@@ -128,9 +128,15 @@ $(function() {
     },
 
     render: function() {
-      // WYLO 1 .... Handle a null/undefined token
+      if (!this.token) {
+        $(this).showInfo('Error', 'The time for this password reset has expired. Please start again.', this, function(view) {
+          view.router.navigate('help', {trigger: true});
+        });
+        return;
+      }
 
       // WYLO 2 .... Put the token in a hidden field
+
       this.$el.html(template_admin_reset());
       $('#admin-reset-form').validate({
         errorPlacement: function() {
