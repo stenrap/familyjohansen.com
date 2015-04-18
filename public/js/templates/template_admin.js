@@ -19,6 +19,6 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"password\" name=\"password1\" placeholder=\"New Password\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><div class=\"form-group\"><input type=\"password\" name=\"password2\" placeholder=\"Again\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Submit</span></button></form>");;return buf.join("");
+buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"password\" name=\"password1\" placeholder=\"New Password\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><div class=\"form-group\"><input type=\"password\" name=\"password2\" placeholder=\"Again\" required=\"required\" class=\"form-control\"/><input type=\"hidden\" name=\"token\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Submit</span></button></form>");;return buf.join("");
 }
 

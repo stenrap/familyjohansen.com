@@ -135,14 +135,14 @@ $(function() {
         return;
       }
 
-      // WYLO 2 .... Put the token in a hidden field
-
       this.$el.html(template_admin_reset());
       $('#admin-reset-form').validate({
         errorPlacement: function() {
           return false;
         }
       });
+
+      $('input[name="token"]').val(this.token);
       $('input[name="password1"]').focus();
     },
 
@@ -159,7 +159,7 @@ $(function() {
       $(this).startSpin(event.currentTarget);
       var view = this;
       var data = $(this).serializeForm(form);
-      // WYLO 3 .... Post the new password (and hidden token) somewhere.
+      // WYLO .... Post the new password (and hidden token) somewhere.
     }
 
   });
