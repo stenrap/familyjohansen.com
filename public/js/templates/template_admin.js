@@ -11,6 +11,14 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"email\" name=\"email\" placeholder=\"Email Address\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Reset Password</span></button></form>");;return buf.join("");
+buf.push("<form id=\"admin-help-form\"><div class=\"form-group\"><input type=\"email\" name=\"email\" placeholder=\"Email Address\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-help-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Reset Password</span></button></form>");;return buf.join("");
+}
+
+function template_admin_reset(locals) {
+var buf = [];
+var jade_mixins = {};
+var jade_interp;
+
+buf.push("<form id=\"admin-reset-form\"><div class=\"form-group\"><input type=\"password\" name=\"password1\" placeholder=\"New Password\" autofocus=\"autofocus\" required=\"required\" class=\"form-control\"/></div><div class=\"form-group\"><input type=\"password\" name=\"password2\" placeholder=\"Again\" required=\"required\" class=\"form-control\"/></div><button id=\"admin-reset-button\" type=\"submit\" data-style=\"slide-down\" class=\"btn btn-lg btn-primary ladda-button\"><span class=\"ladda-label\">Submit</span></button></form>");;return buf.join("");
 }
 

@@ -64,12 +64,12 @@ $(function() {
     },
 
     events: {
-      'click #admin-reset-button' : 'resetPassword'
+      'click #admin-help-button' : 'helpPassword'
     },
 
     render: function() {
       this.$el.html(template_admin_help());
-      $('#admin-reset-form').validate({
+      $('#admin-help-form').validate({
         errorPlacement: function() {
           return false;
         }
@@ -77,9 +77,9 @@ $(function() {
       $('input[name="email"]').focus();
     },
 
-    resetPassword: function(event) {
+    helpPassword: function(event) {
       event.preventDefault();
-      var form = $('#admin-reset-form');
+      var form = $('#admin-help-form');
       if (!form.valid()) {
         return;
       }
@@ -104,6 +104,42 @@ $(function() {
 
     showLogin: function(view) {
       view.router.navigate('login', {trigger: true});
+    }
+
+  });
+
+
+  /* Reset View */
+
+  FJ.ResetView = Backbone.View.extend({
+
+    initialize: function(options) {
+      this.router = options.router;
+      this.token = options.token;
+      this.render();
+    },
+
+    events: {
+      'click #admin-reset-button' : 'resetPassword'
+    },
+
+    render: function() {
+      this.$el.html(template_admin_reset());
+      $('#admin-reset-form').validate({
+        errorPlacement: function() {
+          return false;
+        }
+      });
+      $('input[name="password1"]').focus();
+    },
+
+    resetPassword: function() {
+      event.preventDefault();
+      var form = $('#admin-reset-form');
+      if (!form.valid()) {
+        return;
+      }
+      // WYLO ....
     }
 
   });
@@ -135,8 +171,11 @@ $(function() {
     },
 
     reset: function() {
-      // WYLO .... Create an instance of FJ.ResetView for resetting the password...
-      console.log('The token is: '+$.cookie("token"));
+      new FJ.ResetView({
+        el: '#content',
+        router: this,
+        token: $.cookie("token")
+      })
     }
 
   });
