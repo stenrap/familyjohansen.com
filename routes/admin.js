@@ -65,6 +65,19 @@ router.get('/reset/:token', function(req, res) {
   });
 });
 
+router.put('/reset', function(req, res) {
+  if (!req.params.password1 || !req.params.password2 || !req.params.token || (req.params.password1 != req.params.password2)) {
+    return res.send({error: 'There was an error resetting your password.'});
+  }
+  dbService.verifyToken(token, function(err, valid) {
+    res.clearCookie('token', {path: '/admin'});
+    if (!valid) {
+      return res.send({error: 'There was an error resetting your password.'});
+    }
+    // WYLO .... Create a new database service for actually setting the new password, then return a success JSON message to the client...
+  });
+});
+
 router.get('/test', ensureAuthenticated, function(req, res) {
   // For testing auth...
 });
