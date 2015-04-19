@@ -74,7 +74,7 @@ router.put('/reset', function(req, res) {
     if (!valid) {
       return res.send({error: 'There was an error resetting your password.'});
     }
-    // WYLO .... Create a new database service for actually setting the new password, then return a success JSON message to the client...
+    // TODO .... Call the new database service for resetting the new password, then return a success JSON message to the client...
   });
 });
 

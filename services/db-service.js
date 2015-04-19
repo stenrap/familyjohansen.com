@@ -8,7 +8,7 @@ module.exports = {
     pool = mysql.createPool({
       connectionLimit: dbConfig.get('connectionLimit'),
       database: 'family_johansen',
-//      debug: true,
+      //debug: true,
       host: dbConfig.get('host'),
       password: dbConfig.get('password'),
       port: dbConfig.get('port'),
@@ -69,6 +69,27 @@ module.exports = {
         } else {
           callback('Invalid token.', null);
         }
+      });
+    });
+  },
+
+  resetPassword: function(password, token, callback) {
+    pool.getConnection(function(err, connection) {
+      if (err) throw err;
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, function(err, hash) {
+          if (err) throw err;
+          connection.query('CALL resetPassword(?,?)', [hash, token], function(err, results) {
+            if (err) throw err;
+            connection.release();
+            if (results && results[0] && results[0][0] && results[0][0].success) {
+              var success = results[0][0].success == 1;
+              callback(null, success);
+            } else {
+              callback('Password reset failed.', null);
+            }
+          });
+        });
       });
     });
   },
