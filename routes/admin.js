@@ -66,7 +66,10 @@ router.get('/reset/:token', function(req, res) {
 });
 
 router.put('/reset', function(req, res) {
-  if (!req.params.password1 || !req.params.password2 || !req.params.token || (req.params.password1 != req.params.password2)) {
+  var password1 = req.body.password1;
+  var password2 = req.body.password2;
+  var token = req.body.token;
+  if (!password1 || !password2 || !token || (password1 != password2)) {
     return res.send({error: 'There was an error resetting your password.'});
   }
   dbService.verifyToken(token, function(err, valid) {
@@ -74,7 +77,12 @@ router.put('/reset', function(req, res) {
     if (!valid) {
       return res.send({error: 'There was an error resetting your password.'});
     }
-    // TODO .... Call the new database service for resetting the new password, then return a success JSON message to the client...
+    dbService.resetPassword(password1, token, function(err, success) {
+      if (!success) {
+        return res.send({error: 'There was an error resetting your password.'});
+      }
+      return res.send({success: true});
+    });
   });
 });
 

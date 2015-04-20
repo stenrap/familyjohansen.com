@@ -44,8 +44,11 @@ $(function() {
         type: 'POST',
         url: '/admin/login'
       }).done(function(result) {
-        // TODO .... Check for an error (such as "Invalid username or password") and handle it.
-        //           Then handle the success case (show the list of posts)!
+        if (result.error) {
+          $(this).showInfo('Error', result.error);
+          return;
+        }
+        // TODO .... Handle the success case (show the list of posts)!
       }).always(function() {
         $(this).stopSpin();
       });
@@ -154,12 +157,36 @@ $(function() {
       }
       var password1Input = $('input[name="password1"]');
       var password2Input = $('input[name="password2"]');
+      if (password1Input.val() != password2Input.val()) {
+        $(this).showInfo('Error', "The passwords don't match.", null, function() {
+          password1Input.focus();
+        });
+        return;
+      }
       password1Input.attr('readonly', true);
       password2Input.attr('readonly', true);
       $(this).startSpin(event.currentTarget);
       var view = this;
       var data = $(this).serializeForm(form);
-      // WYLO .... Post the new password (and hidden token) somewhere.
+      $.ajax({
+        data: data,
+        type: 'PUT',
+        url: '/admin/reset'
+      }).done(function(result) {
+        if (result.error) {
+          $(this).showInfo('Error', result.error, null, function() {
+            password1Input.attr('readonly', false);
+            password2Input.attr('readonly', false);
+            password1Input.focus();
+          });
+        } else {
+          $(this).showInfo('Success!', 'Your password has been reset.', view, function() {
+            view.router.navigate('login', {trigger: true});
+          });
+        }
+      }).always(function() {
+        $(this).stopSpin();
+      });
     }
 
   });
