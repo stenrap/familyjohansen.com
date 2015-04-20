@@ -7,6 +7,12 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var transport = null;
 
 router.get('/', function(req, res) {
+  if (req.isAuthenticated()) {
+    res.cookie('authenticated', true, {path: '/admin'});
+  } else {
+    // TODO .... Clear this cookie on logout.
+    res.clearCookie('authenticated', {path: '/admin'});
+  }
   res.render('admin/admin');
 });
 

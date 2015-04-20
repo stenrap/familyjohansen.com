@@ -4,7 +4,7 @@
 
 Database:
 
-    - The 'authors' table is used for authentication, and is comprised of the following columns:
+    - The 'authors' table is used for authentication, and is composed of the following columns:
 
         + id
         + username
@@ -14,9 +14,11 @@ Database:
             > Indexed for password reset
         + token
             > Indexed for password reset
+        + reset_date
+            > Indexed for password reset
     
     
-    - The 'posts' table stores all posts, and is comprised of the following columns:
+    - The 'posts' table stores all posts, and is composed of the following columns:
     
         + id
         + featured

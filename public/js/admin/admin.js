@@ -9,6 +9,10 @@ $(function() {
 
     initialize: function(options) {
       this.router = options.router;
+      if ($.cookie('authenticated')) {
+        this.router.navigate('posts', {trigger: true});
+        return;
+      }
       this.render();
     },
 
@@ -39,6 +43,7 @@ $(function() {
       }
       $(this).startSpin(event.currentTarget);
       var data = $(this).serializeForm(form);
+      var view = this;
       $.ajax({
         data: data,
         type: 'POST',
@@ -48,7 +53,7 @@ $(function() {
           $(this).showInfo('Error', result.error);
           return;
         }
-        // TODO .... Handle the success case (show the list of posts)!
+        view.router.navigate('posts', {trigger: true});
       }).always(function() {
         $(this).stopSpin();
       });
@@ -200,7 +205,8 @@ $(function() {
       '':      'login',
       'login': 'login',
       'help':  'help',
-      'reset': 'reset'
+      'reset': 'reset',
+      'posts': 'posts'
     },
 
     login: function() {
@@ -223,6 +229,11 @@ $(function() {
         router: this,
         token: $.cookie("token")
       })
+    },
+
+    posts: function() {
+      // TODO .... Come up with a view for the list of posts.
+      console.log("GET and show the posts");
     }
 
   });
