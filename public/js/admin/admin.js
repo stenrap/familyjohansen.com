@@ -54,8 +54,6 @@ $(function() {
           return;
         }
         view.router.navigate('posts', {trigger: true});
-      }).always(function() {
-        $(this).stopSpin();
       });
     }
 
@@ -196,6 +194,32 @@ $(function() {
 
   });
 
+  /* Posts View */
+  FJ.PostsView = Backbone.View.extend({
+
+    initialize: function(options) {
+      var view = this;
+      this.router = options.router;
+      this.posts = new FJ.Posts();
+      this.posts.fetch({
+        success: function(collection, response, options) {
+          console.log('Posts have been fetched...');
+        },
+        error: function(collection, response, options) {
+          if (response.status == '302' && response.responseText == 'login') {
+            view.router.navigate('login', {trigger: true});
+          }
+        }
+      });
+    },
+
+    render: function() {
+      // TODO and WYLO .... Create a jade 'posts' template and set this.$el.html(), passing the appropriate JavaScript call...
+      console.log('Posts have been fetched...rendering the PostsView');
+    }
+
+  });
+
 
   /* Admin Router */
 
@@ -232,8 +256,11 @@ $(function() {
     },
 
     posts: function() {
-      // TODO .... Come up with a view for the list of posts.
       console.log("GET and show the posts");
+      new FJ.PostsView({
+        el: '#content',
+        router: this
+      })
     }
 
   });

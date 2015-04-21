@@ -92,13 +92,27 @@ router.put('/reset', function(req, res) {
   });
 });
 
+router.get('/posts', ensureAuthenticated, function(req, res) {
+  var posts = [];
+  // TODO .... Use the dbService to get the posts...
+  return res.send({posts: posts});
+});
+
 router.get('/test', ensureAuthenticated, function(req, res) {
   // For testing auth...
 });
 
+
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/admin');
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    if (req.xhr) {
+      return res.status(302).send('login');
+    } else {
+      res.redirect('/admin#login');
+    }
+  }
 }
 
 module.exports = function(databaseService, injectedPassport, emailConfig) {

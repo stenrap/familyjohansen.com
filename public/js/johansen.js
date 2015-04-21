@@ -1,6 +1,15 @@
 'use strict';
 var FJ = FJ || {};
 
+FJ.Post = Backbone.Model.extend({
+
+});
+
+FJ.Posts = Backbone.Collection.extend({
+  model: FJ.Post,
+  url: '/admin/posts'
+});
+
 jQuery.fn.extend({
 
   serializeForm: function(form) {
