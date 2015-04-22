@@ -47,13 +47,16 @@ CREATE TABLE `posts` (
   `author` int(10) unsigned NOT NULL,
   `tags` varchar(255) DEFAULT NULL,
   `body` text NOT NULL,
+  `published` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `author_fk_idx` (`author`) USING BTREE,
   KEY `title_idx` (`normalized_title`),
   KEY `tag_idx` (`tags`),
   KEY `date_idx` (`post_date`),
+  KEY `published_idx` (`published`),
   CONSTRAINT `author_fk` FOREIGN KEY (`author`) REFERENCES `authors` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
+
 
 /* Stored Procedures */
 
@@ -195,7 +198,8 @@ CREATE PROCEDURE family_johansen.createPost(featured VARCHAR(255),
                                             postDate DATE,
                                             author INT,
                                             tags VARCHAR(255),
-                                            body TEXT)
+                                            body TEXT,
+                                            published TINYINT)
 	BEGIN
 		SET @featured = featured;
 		SET @video = video;
@@ -205,10 +209,11 @@ CREATE PROCEDURE family_johansen.createPost(featured VARCHAR(255),
 		SET @author = author;
 		SET @tags = tags;
 		SET @body = body;
+		SET @published = published;
 		SET @postInsertVar = CONCAT('INSERT INTO family_johansen.posts ',
-		                            'VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?)');
+		                            'VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 		PREPARE postInsertStmt FROM @postInsertVar;
-		EXECUTE postInsertStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body;
+		EXECUTE postInsertStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @published;
 		SELECT LAST_INSERT_ID() AS id;
 		DEALLOCATE PREPARE postInsertStmt;
 	END
@@ -302,7 +307,8 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
                                             postDate DATE,
                                             author INT,
                                             tags VARCHAR(255),
-                                            body TEXT)
+                                            body TEXT,
+                                            published TINYINT)
 	BEGIN
 		SET @id = id;
 		SET @featured = featured;
@@ -313,6 +319,7 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
 		SET @author = author;
 		SET @tags = tags;
 		SET @body = body;
+		SET @published = published;
 		SET @postUpdateVar = CONCAT('UPDATE family_johansen.posts ',
 		                            'SET featured         = ?, ',
 		                            '    video            = ?, ',
@@ -321,11 +328,12 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
 		                            '    post_date        = ?, ',
 		                            '    author           = ?, ',
 		                            '    tags             = ?, ',
-		                            '    body             = ?  ',
+		                            '    body             = ?, ',
+		                            '    published        = ?  ',
 		                            'WHERE id = ? ',
 		                            'LIMIT 1');
 		PREPARE postUpdateStmt FROM @postUpdateVar;
-		EXECUTE postUpdateStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @id;
+		EXECUTE postUpdateStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @published, @id;
 		SELECT @id AS id;
 		DEALLOCATE PREPARE postUpdateStmt;
 	END

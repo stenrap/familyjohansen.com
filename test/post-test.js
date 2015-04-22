@@ -8,7 +8,7 @@ describe('The db service', function() {
   after(dbService.shutDown);
 
   it('should normalize post titles', function() {
-    var titleWithSpace = dbService.normalizeTitle('Our Story')
+    var titleWithSpace = dbService.normalizeTitle('Our Story');
     expect(titleWithSpace).to.equal('our-story');
     var titleWithApostrophe = dbService.normalizeTitle('Bridget\'s Challenge');
     expect(titleWithApostrophe).to.equal('bridgets-challenge');
@@ -22,7 +22,8 @@ describe('The db service', function() {
       postDate: '2015-01-22',
       author: 1,
       tags: 'infertility, miracle, in vitro',
-      body: 'Connor is our <em>precious</em> miracle.'
+      body: 'Connor is our <em>precious</em> miracle.',
+      published: false
     };
     dbService.createPost(post, function(id) {
       postId = id;
@@ -69,7 +70,8 @@ describe('The db service', function() {
       postDate: '2015-01-22',
       author: 1,
       tags: 'infertility, miracle, in vitro',
-      body: 'We love Connor; he is our <em>precious</em> miracle.'
+      body: 'We love Connor; he is our <em>precious</em> miracle.',
+      published: false
     };
     dbService.updatePost(post, function(id) {
       expect(postId).to.equal(id);

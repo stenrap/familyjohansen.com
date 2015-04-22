@@ -8,7 +8,8 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
                                             postDate DATE,
                                             author INT,
                                             tags VARCHAR(255),
-                                            body TEXT)
+                                            body TEXT,
+                                            published TINYINT)
 	BEGIN
 		SET @id = id;
 		SET @featured = featured;
@@ -19,6 +20,7 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
 		SET @author = author;
 		SET @tags = tags;
 		SET @body = body;
+		SET @published = published;
 		SET @postUpdateVar = CONCAT('UPDATE family_johansen.posts ',
 		                            'SET featured         = ?, ',
 		                            '    video            = ?, ',
@@ -27,11 +29,12 @@ CREATE PROCEDURE family_johansen.updatePost(id INT,
 		                            '    post_date        = ?, ',
 		                            '    author           = ?, ',
 		                            '    tags             = ?, ',
-		                            '    body             = ?  ',
+		                            '    body             = ?, ',
+		                            '    published        = ?  ',
 		                            'WHERE id = ? ',
 		                            'LIMIT 1');
 		PREPARE postUpdateStmt FROM @postUpdateVar;
-		EXECUTE postUpdateStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @id;
+		EXECUTE postUpdateStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @published, @id;
 		SELECT @id AS id;
 		DEALLOCATE PREPARE postUpdateStmt;
 	END

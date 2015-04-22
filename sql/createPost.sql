@@ -7,7 +7,8 @@ CREATE PROCEDURE family_johansen.createPost(featured VARCHAR(255),
                                             postDate DATE,
                                             author INT,
                                             tags VARCHAR(255),
-                                            body TEXT)
+                                            body TEXT,
+                                            published TINYINT)
 	BEGIN
 		SET @featured = featured;
 		SET @video = video;
@@ -17,10 +18,11 @@ CREATE PROCEDURE family_johansen.createPost(featured VARCHAR(255),
 		SET @author = author;
 		SET @tags = tags;
 		SET @body = body;
+		SET @published = published;
 		SET @postInsertVar = CONCAT('INSERT INTO family_johansen.posts ',
-		                            'VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?)');
+		                            'VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 		PREPARE postInsertStmt FROM @postInsertVar;
-		EXECUTE postInsertStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body;
+		EXECUTE postInsertStmt USING @featured, @video, @title, @normed, @postDate, @author, @tags, @body, @published;
 		SELECT LAST_INSERT_ID() AS id;
 		DEALLOCATE PREPARE postInsertStmt;
 	END
