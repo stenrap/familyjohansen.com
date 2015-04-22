@@ -21,6 +21,10 @@ input[type=password].form-control {
   float: right;
 }
 
+#new-post {
+  margin-bottom: 15px;
+}
+
 /* jQuery Validation */
 input.error, input.error:focus {
   border-color: #ee0000;

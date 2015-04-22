@@ -50,7 +50,10 @@ $(function() {
         url: '/admin/login'
       }).done(function(result) {
         if (result.error) {
-          $(this).showInfo('Error', result.error);
+          $(this).showInfo('Error', result.error, view, function(thisContext) {
+            $('input[name="password"]').focus();
+          });
+          $(this).stopSpin();
           return;
         }
         view.router.navigate('posts', {trigger: true});
@@ -203,7 +206,7 @@ $(function() {
       this.posts = new FJ.Posts();
       this.posts.fetch({
         success: function(collection, response, options) {
-          console.log('Posts have been fetched...');
+          view.render();
         },
         error: function(collection, response, options) {
           if (response.status == '302' && response.responseText == 'login') {
@@ -213,9 +216,16 @@ $(function() {
       });
     },
 
+    events: {
+      'click #new-post' : 'newPost'
+    },
+
     render: function() {
-      // TODO and WYLO .... Create a jade 'posts' template and set this.$el.html(), passing the appropriate JavaScript call...
-      console.log('Posts have been fetched...rendering the PostsView');
+      this.$el.html(template_admin_posts());
+    },
+
+    newPost: function() {
+      // TODO and WYLO .... Create a new post somehow!
     }
 
   });

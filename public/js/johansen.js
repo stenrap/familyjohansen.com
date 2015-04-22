@@ -35,10 +35,14 @@ jQuery.fn.extend({
   showInfo: function(title, message, thisContext, callback) {
     $('#info-modal-title').html(title);
     $('#info-modal-message').html(message);
-    $('#info-modal').modal();
+    var infoModal = $('#info-modal');
+    infoModal.modal();
+    infoModal.on('shown.bs.modal', function() {
+      infoModal.find('button').focus();
+    });
     if (callback) {
-      $('#info-modal').one('hidden.bs.modal', function (e) {
-        callback(thisContext)
+      infoModal.one('hidden.bs.modal', function (e) {
+        callback(thisContext);
       })
     }
   }
