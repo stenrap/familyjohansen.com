@@ -29,8 +29,8 @@ Database:
             > The actual title of the post
         + normalized_title
             > Indexed and used as the post's friendly URL
-        + date
-            > The date the post was published
+        + post_date
+            > The date the post will show as published
             > Configurable by the author, and indexed so the home page can show the most recent
         + author
             > An id that is a foreign key to 'authors.id'
@@ -40,6 +40,8 @@ Database:
             > Indexed so you can see all posts with a tag
         + body
             > The content of the post, with full support for HTML
+        + published
+            > A boolean indicating whether the post is a visible to the world
     
     
     - Stored procedures used by the db-service:

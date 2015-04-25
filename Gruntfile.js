@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     compile: {
-      admin: ['login', 'help', 'reset', 'posts'],
+      admin: ['login', 'help', 'reset', 'posts', 'editPost'],
       posts: ['list', 'edit']
     }
   });

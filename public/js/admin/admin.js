@@ -56,6 +56,11 @@ $(function() {
           $(this).stopSpin();
           return;
         }
+        FJ.admin = {
+          id: result.id,
+          username: result.username,
+          email: result.email
+        };
         view.router.navigate('posts', {trigger: true});
       });
     }
@@ -198,6 +203,7 @@ $(function() {
   });
 
   /* Posts View */
+
   FJ.PostsView = Backbone.View.extend({
 
     initialize: function(options) {
@@ -225,7 +231,26 @@ $(function() {
     },
 
     newPost: function() {
-      // TODO and WYLO .... Create a new post somehow!
+      this.router.navigate('posts/new', {trigger: true});
+    }
+
+  });
+
+  /* Edit Post View */
+
+  FJ.EditPostView = Backbone.View.extend({
+
+    initialize: function(options) {
+      if (options.create) {
+        this.post = new FJ.Post();
+      } else {
+        // TODO .... Get the post from the appropriate location and set this.post equal to it...
+      }
+      this.router = options.router;
+    },
+
+    events: {
+
     }
 
   });
@@ -240,7 +265,8 @@ $(function() {
       'login': 'login',
       'help':  'help',
       'reset': 'reset',
-      'posts': 'posts'
+      'posts': 'posts',
+      'posts/new' : 'newPost'
     },
 
     login: function() {
@@ -266,10 +292,17 @@ $(function() {
     },
 
     posts: function() {
-      console.log("GET and show the posts");
       new FJ.PostsView({
         el: '#content',
         router: this
+      })
+    },
+
+    newPost: function() {
+      new FJ.EditPostView({
+        el: '#content',
+        router: this,
+        create: true
       })
     }
 
