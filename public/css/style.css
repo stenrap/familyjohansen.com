@@ -31,6 +31,11 @@ input[type=password].form-control {
 
 /* Edit Post View */
 
+#edit-post-container {
+  margin: 0 auto;
+  width: 82.5%;
+}
+
 #edit-post-form-left {
   display: inline-block;
   margin-right: 2.5%;
@@ -54,7 +59,14 @@ a.tab-name {
   color: #8c8c8c;
 }
 
+.tab-content .tab-pane {
+  height: 200px;
+  padding: 0 15px 15px 15px;
+}
+
+
 /* jQuery Validation */
+
 input.error, input.error:focus {
   border-color: #ee0000;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(238,0,0,.3);
