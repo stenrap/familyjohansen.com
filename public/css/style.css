@@ -21,8 +21,37 @@ input[type=password].form-control {
   float: right;
 }
 
+
+/* Posts View */
+
 #new-post {
   margin-bottom: 15px;
+}
+
+
+/* Edit Post View */
+
+#edit-post-form-left {
+  display: inline-block;
+  margin-right: 2.5%;
+  width: 70%;
+}
+
+#edit-post-form-right {
+  display: inline-block;
+  width: 27.5%;
+}
+
+#featured-box .panel-body {
+  padding: 15px 0;
+}
+
+#featured-box .nav-tabs {
+  padding: 0 15px;
+}
+
+a.tab-name {
+  color: #8c8c8c;
 }
 
 /* jQuery Validation */

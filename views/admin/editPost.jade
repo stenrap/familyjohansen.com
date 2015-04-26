@@ -1,4 +1,25 @@
 div#edit-post-container
    form#edit-post-form
-      .form-group
-         input.form-control(type='text', name='title', placeholder='Post Title', autofocus, required)
+      div#edit-post-form-left
+         .form-group
+            input.form-control(type='text', name='title', placeholder='Post Title', autofocus, required)
+            div#format-buttons
+               <!-- WYLO .... Get this box visible, then start on the #editor! -->
+            div#editor
+      div#edit-post-form-right
+         div#featured-box.panel.panel-default
+            div.panel-heading
+               h4.panel-title Featured
+            div.panel-body
+               div(role='tabpanel')
+                  ul.nav.nav-tabs(role='tablist')
+                     li.active(role='presentation')
+                        a.tab-name(href='#image', aria-controls='image', role='tab', data-toggle='tab')
+                           | Image
+                     li(role='presentation')
+                        a.tab-name(href='#video', aria-controls='video', role='tab', data-toggle='tab')
+                           | Video
+                  div.tab-content
+                     div.tab-pane.active(id='image', role='tabpanel')
+                     div.tab-pane(id='video', role='tabpanel')
+         div#status-box

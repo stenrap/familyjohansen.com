@@ -247,10 +247,21 @@ $(function() {
         // TODO .... Get the post from the appropriate location and set this.post equal to it...
       }
       this.router = options.router;
+      this.render();
     },
 
     events: {
 
+    },
+
+    render: function() {
+      this.$el.html(template_admin_editPost(this.post));
+      $('#edit-post-form').validate({
+        errorPlacement: function() {
+          return false;
+        }
+      });
+      $('input[name="title"]').focus();
     }
 
   });
