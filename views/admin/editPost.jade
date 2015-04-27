@@ -5,7 +5,7 @@ div#edit-post-container
             input.form-control(type='text', name='title', placeholder='Post Title', autofocus, required)
             div#format-buttons
                <!-- WYLO .... Get this box visible, then start on the #editor! -->
-            div#editor
+            div#editor(contenteditable='true')
       div#edit-post-form-right
          div#featured-box.panel.panel-default
             div.panel-heading
@@ -22,4 +22,12 @@ div#edit-post-container
                   div.tab-content
                      div.tab-pane.active(id='image', role='tabpanel')
                      div.tab-pane(id='video', role='tabpanel')
-         div#status-box
+         div#status-box.panel.panel-default
+            div.panel-heading
+               h4.panel-title Status
+            div.panel-body
+               div.checkbox
+                  label
+                     input(type='checkbox', name='published', required)
+                     | Published
+               a#post-date(href='#') April 26, 2015

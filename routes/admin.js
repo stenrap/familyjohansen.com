@@ -23,7 +23,8 @@ router.post('/login', function(req, res) {
     if (err) return res.send({error: err.message});
     if (!user) return res.send({error: 'Invalid username or password.'});
     req.login(user, function(err) {
-      if (err) return res.send({error: err})
+      if (err) return res.send({error: err});
+      res.cookie('authenticated', true, {path: '/admin'});
       return res.send({
         user: {
           id: req.user.id,

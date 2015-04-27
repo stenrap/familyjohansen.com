@@ -207,8 +207,12 @@ $(function() {
   FJ.PostsView = Backbone.View.extend({
 
     initialize: function(options) {
-      var view = this;
       this.router = options.router;
+      if (!$.cookie('authenticated')) {
+        this.router.navigate('login', {trigger: true});
+        return;
+      }
+      var view = this;
       this.posts = new FJ.Posts();
       this.posts.fetch({
         success: function(collection, response, options) {
@@ -241,17 +245,22 @@ $(function() {
   FJ.EditPostView = Backbone.View.extend({
 
     initialize: function(options) {
+      this.router = options.router;
+      if (!$.cookie('authenticated')) {
+        this.router.navigate('login', {trigger: true});
+        return;
+      }
       if (options.create) {
         this.post = new FJ.Post();
       } else {
         // TODO .... Get the post from the appropriate location and set this.post equal to it...
       }
-      this.router = options.router;
+
       this.render();
     },
 
     events: {
-
+      // TODO and WYLO .... Get your WYSIWYG working!
     },
 
     render: function() {
