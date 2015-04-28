@@ -36,5 +36,8 @@ node_modules
 # OS X
 .DS_Store
 
+# Excel temporary file
+~*.xlsx
+
 # Files that just shouldn't be committed
 login-test.js

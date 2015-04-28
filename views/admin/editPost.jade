@@ -4,7 +4,26 @@ div#edit-post-container
          .form-group
             input.form-control(type='text', name='title', placeholder='Post Title', autofocus, required)
             div#format-buttons
-               <!-- WYLO .... Get this box visible, then start on the #editor! -->
+               div.dropdown
+                  button#font-size.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='true')
+                     | Paragraph &nbsp;
+                     span.caret
+                  ul.dropdown-menu(role='menu', aria-labelledby='font-size')
+                     li(role='presentation')
+                        a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='0')
+                           | Paragraph
+                     li(role='presentation')
+                        a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='1')
+                           h1 Heading 1
+                     li(role='presentation')
+                        a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='2')
+                           h2 Heading 2
+                     li(role='presentation')
+                        a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='3')
+                           h3 Heading 3
+                     li(role='presentation')
+                        a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='4')
+                           h4 Heading 4
             div#editor(contenteditable='true')
       div#edit-post-form-right
          div#featured-box.panel.panel-default

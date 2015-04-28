@@ -260,7 +260,8 @@ $(function() {
     },
 
     events: {
-      // TODO and WYLO .... Get your WYSIWYG working!
+      'click .font-size' : 'onFontSizeChange',
+      'keydown #editor' : 'onEditorKeyDown'
     },
 
     render: function() {
@@ -271,7 +272,27 @@ $(function() {
         }
       });
       $('input[name="title"]').focus();
+    },
+
+    /* BEGIN Editor Events */
+
+    onFontSizeChange : function(event) {
+      var buttonText = 'Paragraph ';
+      var fontSize = $(event.currentTarget).data('size');
+      if      (fontSize == 1) buttonText = 'Heading 1 ';
+      else if (fontSize == 2) buttonText = 'Heading 2 ';
+      else if (fontSize == 3) buttonText = 'Heading 3 ';
+      else if (fontSize == 4) buttonText = 'Heading 4 ';
+      buttonText += ' &nbsp;<span class="caret"></span>';
+      $('#font-size').html(buttonText);
+      // TODO and WYLO .... Learn about text selection in JavaScript. If there is selected text, wrap it in the appropriate tags...
+    },
+
+    onEditorKeyDown: function(event) {
+      console.log('The keyCode is: '+event.keyCode);
     }
+
+    /* END   Editor Events */
 
   });
 
