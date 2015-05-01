@@ -11,6 +11,11 @@ a:hover {
   text-decoration: none;
 }
 
+h1, h2, h3, h4 {
+  margin-bottom: 3px;
+  margin-top: 6px;
+}
+
 input[type=text].form-control,
 input[type=password].form-control {
   height: 46px;

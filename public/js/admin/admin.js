@@ -261,7 +261,8 @@ $(function() {
 
     events: {
       'click .font-size' : 'onFontSizeChange',
-      'keydown #editor' : 'onEditorKeyDown'
+      'click #editor' : 'onEditorClick',
+      'keyup #editor' : 'onEditorKeyUp'
     },
 
     render: function() {
@@ -277,19 +278,60 @@ $(function() {
     /* BEGIN Editor Events */
 
     onFontSizeChange : function(event) {
-      var buttonText = 'Paragraph ';
-      var fontSize = $(event.currentTarget).data('size');
-      if      (fontSize == 1) buttonText = 'Heading 1 ';
-      else if (fontSize == 2) buttonText = 'Heading 2 ';
-      else if (fontSize == 3) buttonText = 'Heading 3 ';
-      else if (fontSize == 4) buttonText = 'Heading 4 ';
-      buttonText += ' &nbsp;<span class="caret"></span>';
-      $('#font-size').html(buttonText);
-      // TODO and WYLO .... Learn about text selection in JavaScript. If there is selected text, wrap it in the appropriate tags...
+      var contents = document.getSelection().getRangeAt(0).cloneContents();
+      var parentElement = this.getSelectionParent();
+      var size = $(event.currentTarget).data('size');
+      if (contents.textContent.length == 0 || parentElement.localName == 'h'+size) {
+        return;
+      }
+      if (/h\d/.test(parentElement.localName)) {
+        $(parentElement).remove();
+      }
+      var openTag = '';
+      var closeTag = '';
+      if (size > 0) {
+        openTag  = '<h'+size+'>';
+        closeTag = '</h'+size+'>';
+      }
+      document.execCommand('insertHTML', false, openTag + contents.textContent + closeTag);
+      this.setButtonStates();
     },
 
-    onEditorKeyDown: function(event) {
-      console.log('The keyCode is: '+event.keyCode);
+    onEditorClick: function(event) {
+      this.setButtonStates();
+    },
+
+    onEditorKeyUp: function(event) {
+      this.setButtonStates();
+    },
+
+    getSelectionParent: function() {
+      return document.getSelection().getRangeAt(0).startContainer.parentElement;
+    },
+
+    setButtonStates: function() {
+      this.setFontSizeButtonText();
+    },
+
+    setFontSizeButtonText: function() {
+      var buttonText = 'Paragraph ';
+      var parentElement = this.getSelectionParent();
+      switch(parentElement.localName) {
+        case 'h4':
+          buttonText = 'Heading 4 ';
+          break;
+        case 'h3':
+          buttonText = 'Heading 3 ';
+          break;
+        case 'h2':
+          buttonText = 'Heading 2 ';
+          break;
+        case 'h1':
+          buttonText = 'Heading 1 ';
+          break;
+      }
+      buttonText += ' &nbsp;<span class="caret"></span>';
+      $('#font-size').html(buttonText);
     }
 
     /* END   Editor Events */
