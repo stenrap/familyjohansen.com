@@ -256,12 +256,18 @@ $(function() {
         // TODO .... Get the post from the appropriate location and set this.post equal to it...
       }
       this.boldPressed = false;
+      this.italicPressed = false;
+      this.underlinePressed = false;
+      this.strikePressed = false;
       this.render();
     },
 
     events: {
       'click .font-size' : 'onFontSizeChange',
       'click #bold' : 'onBoldClick',
+      'click #italic' : 'onItalicClick',
+      'click #underline' : 'onUnderlineClick',
+      'click #strike' : 'onStrikeClick',
       'click #editor' : 'onEditorClick',
       'keyup #editor' : 'onEditorKeyUp'
     },
@@ -274,6 +280,7 @@ $(function() {
         }
       });
       $('input[name="title"]').focus();
+      $('[data-toggle="tooltip"]').tooltip();
     },
 
     /* BEGIN Editor Events */
@@ -324,14 +331,45 @@ $(function() {
       }
       document.execCommand('bold', false, null);
       this.boldPressed = !this.boldPressed;
-      var boldButton = $('#bold');
-      if (this.boldPressed) {
-        if (!boldButton.hasClass('active')) {
-          boldButton.button('toggle');
+      this.afterToggleButtonClick(event, this.boldPressed);
+    },
+
+    onItalicClick: function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
+      document.execCommand('italic', false, null);
+      this.italicPressed = !this.italicPressed;
+      this.afterToggleButtonClick(event, this.italicPressed);
+    },
+
+    onUnderlineClick: function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
+      document.execCommand('underline', false, null);
+      this.underlinePressed = !this.underlinePressed;
+      this.afterToggleButtonClick(event, this.underlinePressed);
+    },
+
+    onStrikeClick: function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
+      document.execCommand('strikeThrough', false, null);
+      this.strikePressed = !this.strikePressed;
+      this.afterToggleButtonClick(event, this.strikePressed);
+    },
+
+    afterToggleButtonClick: function(event, pressed) {
+      var button = $(event.currentTarget);
+      if (pressed) {
+        if (!button.hasClass('active')) {
+          button.button('toggle');
         }
       } else {
-        if (boldButton.hasClass('active')) {
-          boldButton.button('toggle');
+        if (button.hasClass('active')) {
+          button.button('toggle');
         }
       }
       event.preventDefault();
@@ -352,7 +390,10 @@ $(function() {
 
     setButtonStates: function() {
       this.setFontSizeButtonText();
-      this.setBoldState();
+      this.setToggleButtonState('b', '#bold');
+      this.setToggleButtonState('i', '#italic');
+      this.setToggleButtonState('u', '#underline');
+      this.setToggleButtonState('strike', '#strike');
     },
 
     setFontSizeButtonText: function() {
@@ -376,30 +417,17 @@ $(function() {
       $('#font-size').html(buttonText);
     },
 
-    setBoldState: function() {
-      /*
-      var boldButton = $('#bold');
-      if (this.boldPressed) {
-        if (!boldButton.hasClass('active')) {
-          boldButton.button('toggle');
-        }
-      } else {
-        // The button is not pressed, so only set the 'active' class if the selection has a <b>
-        if (boldButton.hasClass('active')) {
-          boldButton.button('toggle');
-        }
-      }
-      */
+    setToggleButtonState: function(parent, selector) {
       var range = document.getSelection().getRangeAt(0);
-      var boldElement = $(range.startContainer).parents('b');
-      var boldButton = $('#bold');
-      if (boldElement.length > 0) {
-        if (!boldButton.hasClass('active')) {
-          boldButton.button('toggle');
+      var targetElement = $(range.startContainer).parents(parent);
+      var targetButton = $(selector);
+      if (targetElement.length > 0) {
+        if (!targetButton.hasClass('active')) {
+          targetButton.button('toggle');
         }
       } else {
-        if (boldButton.hasClass('active')) {
-          boldButton.button('toggle');
+        if (targetButton.hasClass('active')) {
+          targetButton.button('toggle');
         }
       }
     }

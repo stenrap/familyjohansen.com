@@ -24,8 +24,18 @@ div#edit-post-container
                      li(role='presentation')
                         a.font-size(role='menuitem', tabindex='-1', href='javascript:void(0)', data-size='1')
                            h1 Heading 1
-               a#bold.btn.btn-default(type='button', aria-pressed='false')
-                  strong B
+               a#bold.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Bold')
+                  i.fa.fa-bold
+               a#italic.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Italic')
+                  i.fa.fa-italic
+               a#underline.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Underline')
+                  i.fa.fa-underline
+               a#strike.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Strikethrough')
+                  i.fa.fa-strikethrough
+               a#unordered-list.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Bulleted List')
+                  i.fa.fa-list-ul
+               a#ordered-list.btn.btn-default(type='button', aria-pressed='false', data-toggle='tooltip' data-placement='top', title='Numbered List')
+                  i.fa.fa-list-ol
             div#editor(contenteditable='true')
       div#edit-post-form-right
          div#featured-box.panel.panel-default
