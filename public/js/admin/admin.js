@@ -315,7 +315,20 @@ $(function() {
     },
 
     onBoldClick: function(event) {
-      // TODO and WYLO .... Get the bold button working!
+      var boldButton = $(event.currentTarget);
+      if (!this.insideEditor()) {
+        boldButton.attr('aria-pressed', false);
+        boldButton.removeClass('active');
+        return;
+      }
+      if (boldButton.hasClass('active')) {
+        boldButton.attr('aria-pressed', false);
+        boldButton.removeClass('active');
+      } else {
+        boldButton.attr('aria-pressed', true);
+        boldButton.addClass('active');
+      }
+      // TODO and WYLO .... Get the bold button working! This code for making the button look pressed or not will live somewhere else (similar to setFontSizeButtonText())
     },
 
     onEditorClick: function(event) {
