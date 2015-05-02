@@ -255,7 +255,7 @@ $(function() {
       } else {
         // TODO .... Get the post from the appropriate location and set this.post equal to it...
       }
-
+      this.boldPressed = false;
       this.render();
     },
 
@@ -281,6 +281,9 @@ $(function() {
     insideEditor: function(event) {
       try {
         var range = document.getSelection().getRangeAt(0);
+        if (range.startContainer && range.startContainer.id == 'editor') {
+          return true;
+        }
         var editor = $(range.startContainer).parents('#editor');
         if (editor.length == 0) {
           return false;
@@ -312,23 +315,27 @@ $(function() {
       }
       document.execCommand('insertHTML', false, openTag + contents.textContent + closeTag);
       this.setButtonStates();
+      $('#editor').focus();
     },
 
     onBoldClick: function(event) {
-      var boldButton = $(event.currentTarget);
       if (!this.insideEditor()) {
-        boldButton.attr('aria-pressed', false);
-        boldButton.removeClass('active');
         return;
       }
-      if (boldButton.hasClass('active')) {
-        boldButton.attr('aria-pressed', false);
-        boldButton.removeClass('active');
+      document.execCommand('bold', false, null);
+      this.boldPressed = !this.boldPressed;
+      var boldButton = $('#bold');
+      if (this.boldPressed) {
+        if (!boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
       } else {
-        boldButton.attr('aria-pressed', true);
-        boldButton.addClass('active');
+        if (boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
       }
-      // TODO and WYLO .... Get the bold button working! This code for making the button look pressed or not will live somewhere else (similar to setFontSizeButtonText())
+      event.preventDefault();
+      $('#editor').focus();
     },
 
     onEditorClick: function(event) {
@@ -345,6 +352,7 @@ $(function() {
 
     setButtonStates: function() {
       this.setFontSizeButtonText();
+      this.setBoldState();
     },
 
     setFontSizeButtonText: function() {
@@ -366,6 +374,34 @@ $(function() {
       }
       buttonText += ' &nbsp;<span class="caret"></span>';
       $('#font-size').html(buttonText);
+    },
+
+    setBoldState: function() {
+      /*
+      var boldButton = $('#bold');
+      if (this.boldPressed) {
+        if (!boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
+      } else {
+        // The button is not pressed, so only set the 'active' class if the selection has a <b>
+        if (boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
+      }
+      */
+      var range = document.getSelection().getRangeAt(0);
+      var boldElement = $(range.startContainer).parents('b');
+      var boldButton = $('#bold');
+      if (boldElement.length > 0) {
+        if (!boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
+      } else {
+        if (boldButton.hasClass('active')) {
+          boldButton.button('toggle');
+        }
+      }
     }
 
     /* END   Editor Events */
