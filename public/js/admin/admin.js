@@ -261,6 +261,7 @@ $(function() {
 
     events: {
       'click .font-size' : 'onFontSizeChange',
+      'click #bold' : 'onBoldClick',
       'click #editor' : 'onEditorClick',
       'keyup #editor' : 'onEditorKeyUp'
     },
@@ -295,6 +296,10 @@ $(function() {
       }
       document.execCommand('insertHTML', false, openTag + contents.textContent + closeTag);
       this.setButtonStates();
+    },
+
+    onBoldClick: function(event) {
+      // TODO and WYLO .... Get the bold button working!
     },
 
     onEditorClick: function(event) {

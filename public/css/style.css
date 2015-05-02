@@ -16,6 +16,12 @@ h1, h2, h3, h4 {
   margin-top: 6px;
 }
 
+.btn:focus,
+.btn:active,
+.btn:active:focus {
+  outline: none;
+}
+
 input[type=text].form-control,
 input[type=password].form-control {
   height: 46px;
@@ -48,12 +54,15 @@ input[type=password].form-control {
 #edit-post-form-left {
   display: inline-block;
   margin-right: 2.5%;
+  /*TODO .... Get the widths and min-widths correct on the left/right so they stack properly*/
+  /*min-width: 300px;*/
   vertical-align: top;
   width: 70%;
 }
 
 #edit-post-form-right {
   display: inline-block;
+  /*min-width: 300px;*/
   vertical-align: top;
   width: 27.5%;
 }
@@ -86,8 +95,17 @@ a.tab-name {
   border-top: 1px solid #ddd;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  height: 46px;
+  height: 47px;
   margin-top: 30px;
+  padding: 6px 0 0 6px;
+}
+
+#format-buttons .dropdown, #format-buttons a {
+  display: inline-block;
+}
+
+#format-buttons a.btn {
+  margin-left: 3px;
 }
 
 #editor {
