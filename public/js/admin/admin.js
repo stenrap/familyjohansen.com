@@ -259,6 +259,8 @@ $(function() {
       this.italicPressed = false;
       this.underlinePressed = false;
       this.strikePressed = false;
+      this.unorderedPressed = false;
+      this.orderedPressed = false;
       this.render();
     },
 
@@ -268,6 +270,8 @@ $(function() {
       'click #italic' : 'onItalicClick',
       'click #underline' : 'onUnderlineClick',
       'click #strike' : 'onStrikeClick',
+      'click #unordered-list' : 'onUnorderedClick',
+      'click #ordered-list' : 'onOrderedClick',
       'click #editor' : 'onEditorClick',
       'keyup #editor' : 'onEditorKeyUp'
     },
@@ -361,6 +365,24 @@ $(function() {
       this.afterToggleButtonClick(event, this.strikePressed);
     },
 
+    onUnorderedClick: function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
+      document.execCommand('insertUnorderedList', false, null);
+      this.unorderedPressed = !this.unorderedPressed;
+      this.afterToggleButtonClick(event, this.unorderedPressed);
+    },
+
+    onOrderedClick: function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
+      document.execCommand('insertOrderedList', false, null);
+      this.orderedPressed = !this.orderedPressed;
+      this.afterToggleButtonClick(event, this.orderedPressed);
+    },
+
     afterToggleButtonClick: function(event, pressed) {
       var button = $(event.currentTarget);
       if (pressed) {
@@ -394,6 +416,8 @@ $(function() {
       this.setToggleButtonState('i', '#italic');
       this.setToggleButtonState('u', '#underline');
       this.setToggleButtonState('strike', '#strike');
+      this.setToggleButtonState('ul', '#unordered-list');
+      this.setToggleButtonState('ol', '#ordered-list');
     },
 
     setFontSizeButtonText: function() {
