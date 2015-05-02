@@ -278,7 +278,23 @@ $(function() {
 
     /* BEGIN Editor Events */
 
+    insideEditor: function(event) {
+      try {
+        var range = document.getSelection().getRangeAt(0);
+        var editor = $(range.startContainer).parents('#editor');
+        if (editor.length == 0) {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+      return true;
+    },
+
     onFontSizeChange : function(event) {
+      if (!this.insideEditor()) {
+        return;
+      }
       var contents = document.getSelection().getRangeAt(0).cloneContents();
       var parentElement = this.getSelectionParent();
       var size = $(event.currentTarget).data('size');
